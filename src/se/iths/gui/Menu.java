@@ -96,7 +96,7 @@ package se.iths.gui;
           for (Truck t : truckList) {
             System.out.print(t.truckID() < 10 ? " " + t.truckID() + " " + t.truckType() + "  " + t.truckStatus() : 
               " " + t.truckID() + " " + t.truckType() + "  " + t.truckStatus());
-            System.out.println("sldkfjlsdjkf");
+            System.out.println("");
           }
           /*actorListFullData = adb.getAllActorsFullData();
           System.out.println("\nAll actors so far:");
