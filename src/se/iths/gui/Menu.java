@@ -3,6 +3,8 @@ package se.iths.gui;
 
   import se.iths.app.TruckSql;
   import se.iths.app.Truck;
+  import se.iths.app.EmployeeSql;
+  import se.iths.app.Employee;
 /*  import db.gui.AddMovie;
   import db.app.MovieSQL;
   import db.app.FaceMovieDB;
@@ -32,10 +34,12 @@ package se.iths.gui;
     private String invalidInput = "\n- - - Invalid input, please try again";
 
     private TruckSql tdb = new TruckSql();
+    private EmployeeSql empdb = new EmployeeSql();
     
     private boolean exit;
     private Scanner sc = new Scanner(System.in);
     private ArrayList<Truck> truckList = new ArrayList<Truck>();
+    private ArrayList<Employee> employeeList = new ArrayList<Employee>();
     private ArrayList<String> addReviewList = new ArrayList<String>();
 
         
@@ -84,6 +88,12 @@ package se.iths.gui;
 
         case 2: // Handle personel
           System.out.println("Handle persons working here");
+          employeeList = empdb.getFullEmployeeList();
+          for (Employee emp: employeeList) {
+              System.out.print(emp.emp_id() < 10 ? " " + emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id() : 
+                " " +  emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id());
+              System.out.println("");
+            }
           /*addMovieList = addMovie.addMovie();
           Movie m = new Movie(addMovieList);
           mdb.addMovie(m);
