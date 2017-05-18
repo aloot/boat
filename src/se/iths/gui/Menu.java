@@ -5,25 +5,9 @@ package se.iths.gui;
   import se.iths.app.Truck;
   import se.iths.app.EmployeeSql;
   import se.iths.app.Employee;
-/*  import db.gui.AddMovie;
-  import db.app.MovieSQL;
-  import db.app.FaceMovieDB;
+  import se.iths.app.KKtyp;
+  import se.iths.app.KKtypSql;
 
-  import db.app.Review;
-  import db.gui.AddReview;
-  import db.app.ReviewSQL;
-  import db.app.FaceReviewDB;
-
-  import db.app.Actor;
-  import db.gui.AddActor;
-  import db.app.ActorSQL;
-  import db.app.FaceActorDB;
-
-  import db.app.MovieActor;
-  //import db.app.FaceMovieActorDB;
-
-  import db.utils.Utils;
-*/
   import java.util.Scanner;
   import java.util.ArrayList;
   import java.util.List;
@@ -35,13 +19,12 @@ package se.iths.gui;
 
     private TruckSql tdb = new TruckSql();
     private EmployeeSql empdb = new EmployeeSql();
+    private KKtypSql kkdb = new KKtypSql();
     
     private boolean exit;
     private Scanner sc = new Scanner(System.in);
     private ArrayList<Truck> truckList = new ArrayList<Truck>();
     private ArrayList<Employee> employeeList = new ArrayList<Employee>();
-    private ArrayList<String> addReviewList = new ArrayList<String>();
-
         
     //-----------------------------//
     public void runMenu() {
@@ -53,11 +36,11 @@ package se.iths.gui;
     }
   //-----------------------------//
     public void printMenu() {
-      System.out.println("1. Boka kaj");
-      System.out.println("2. Hantera personal");
-      System.out.println("3. Hantera maskiner");
-      System.out.println("4. Get a report");
-      System.out.println("5. Avsluta");
+      System.out.println("1. Vessel calls");
+      System.out.println("2. Get a report");
+      System.out.println("3. Manage personel");
+      System.out.println("4. Manage inventory");
+      System.out.println("5. Quit");
     }
     //-------------------------------------//
   /*
@@ -66,60 +49,51 @@ package se.iths.gui;
   firstChoice
   */
     public void firstChoice(int menuChoice) {
-      
- /*     AddMovie addMovie = new AddMovie();
-      List<Movie> mList = mdb.getAllMoviesFullData();
-
-      List<String> movieListByName = new ArrayList<String>();
-      List<String> movieListByMovieID = new ArrayList<String>();
-
-      ArrayList<Actor> actorListFullData;
-      // get an actor list
-      // adb = adb.getAllActorsByName();*/
       switch(menuChoice) {
         case 1: // Boka kaj
-          System.out.println("Make a booking");
-//        movieListByName = mdb.getAllMoviesByTitle();
-        /*for (Movie m : mList) {
-          System.out.print(m.id_movie() < 10 ? " " + m.id_movie() + "   " + m.title(): m.id_movie() + "   " + m.title());
-          System.out.println("");
-        }*/
+          System.out.println("Make a vessel call");
+          int i = menuInput(8);
+          pickBerth(i);
         break;
 
-        case 2: // Handle personel
-          System.out.println("Handle persons working here");
+        case 3: // Handle personel
+          System.out.println("Manage employees");
           employeeList = empdb.getFullEmployeeList();
           for (Employee emp: employeeList) {
-              System.out.print(emp.emp_id() < 10 ? " " + emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id() : 
-                " " +  emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id());
-              System.out.println("");
+            String s = emp.emp_id() + " " + emp.f_name() + " " + emp.s_name() + "  " + emp.kk_id()  + "  " + 
+                      emp.empstatus_id() + "  " + emp.schema_id() + "  " + emp.hours_123();
+            if (emp.emp_id() < 10) {
+              System.out.println("  " + s);
+            } else if (emp.emp_id() < 100) {
+              System.out.println(" " + s);
+            } else {
+              System.out.println(s);
             }
-          /*addMovieList = addMovie.addMovie();
-          Movie m = new Movie(addMovieList);
-          mdb.addMovie(m);
-          runMenu();*/
+ //           System.out.print(emp.emp_id() < 10 ? " " + emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id() : 
+ //               " " +  emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id());
+ //             System.out.println("");
+            }
           break;
 
-        case 3: // Handle machinery
-          System.out.println("Handle inventory");
+        case 4: // Handle machinery
+          System.out.println("Manage inventory");
           truckList = tdb.getFullTruckList();
+
+          System.out.print(truckList.size());
           for (Truck t : truckList) {
-            System.out.print(t.truckID() < 10 ? " " + t.truckID() + " " + t.truckType() + "  " + t.truckStatus() : 
-              " " + t.truckID() + " " + t.truckType() + "  " + t.truckStatus());
+            String s = t.truckID() + "  " + t.truckType() + "  " + t.truckStatus();
+            if (t.truckID() < 10) {
+              System.out.print("  " + s);
+            } else if (t.truckID() < 100) {
+              System.out.print(" " + s);
+            } else {
+              System.out.print(s);
+            }
             System.out.println("");
           }
-          /*actorListFullData = adb.getAllActorsFullData();
-          System.out.println("\nAll actors so far:");
-          System.out.println("ID  Actor\n----------------------------------------");
-          for (Actor a : actorListFullData) {
-            System.out.println(a.id_actor() < 10 ? " " + a.id_actor() + "   " + a.name() : a.id_actor() + "   " + a.name());
-          }
-          System.out.println("------------End of List-----------------");
-          showActorList(actorListFullData);
-          printMenu();*/
           break;
 
-        case 4: // Reports
+        case 2: // Reports
           System.out.println("Get some nice reads");
           break;
           
@@ -130,12 +104,12 @@ package se.iths.gui;
          
         default:
           System.out.println(invalidInput);
+          break;
       } 
     }
 
   //------------------------//
   
-
     public int menuInput(int maxInt) {
       int menuChoice = -1;
       while (menuChoice < 0 || menuChoice > maxInt) {
@@ -151,19 +125,8 @@ package se.iths.gui;
       } return menuChoice;
     }
 
-  
-
-    private int kbdChoice(int max) {
-      int choice = -1;
-      while (choice < 0 || choice > max ) {
-        try {
-          System.out.print(enterSelection);
-          choice = Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException nfe) {
-          System.out.println(invalidInput);
-        }
-      }
-      return choice;
+    private void pickBerth(int i) {
+          kkdb.selectEmpsByKK(i);
     }
 
 /*    private void extendMovieData(List<Movie> mList, int movieNr) {

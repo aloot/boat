@@ -1,8 +1,9 @@
 package se.iths.app;
 
+import se.iths.app.Employee;
+
 import java.util.*;
 import java.sql.ResultSet;
-import java.sql.PreparedStatement;
  
 
 public class EmployeeSql {
@@ -25,7 +26,8 @@ public class EmployeeSql {
                           rs.getString("s_name"),
                           rs.getInt("kk_id"),
                           rs.getInt("empstatus_id"),
-                          rs.getInt("schema_id"));
+                          rs.getInt("schema_id"),
+                          rs.getString("hours_123"));
           employeeList.add(emp);
         }
         db.closeIt(rs);
@@ -36,6 +38,8 @@ public class EmployeeSql {
       }
       return null;
     }
+    
+
 
  /*   public List<Truck> getAllReviewsFullData(){
       ArrayList<Truck> reviewList = new ArrayList<Truck>();

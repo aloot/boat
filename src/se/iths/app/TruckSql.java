@@ -2,7 +2,6 @@ package se.iths.app;
 
 import java.util.*;
 import java.sql.ResultSet;
-import java.sql.PreparedStatement;
  
 
 public class TruckSql {
@@ -12,7 +11,7 @@ public class TruckSql {
     public ArrayList<Truck> getFullTruckList(){
       ArrayList<Truck> truckList = new ArrayList<Truck>();
 //      String SQL = "SELECT * from t.*, tt.*, ts.* FROM truck t, trucktyp tt, trstatus ts WHERE t.tr_typ_id = tt.tr_typ_id and t.tr_status_id = ts.tr_status_id LIMIT 20";
-      String SQL = "SELECT * from truck";  
+      String SQL = "SELECT * from truck limit 230";  
       ResultSet rs = db.executeQuery(SQL);
       //ResultSet rs = db.executeQuery("SELECT * FROM movie ORDER BY id_movie");
       //"SELECT ma.character, a.*, m.* FROM movie_actor ma, actor a, movie m 
