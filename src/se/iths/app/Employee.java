@@ -11,8 +11,6 @@ public class Employee {
   public int empstatus_id;
   public int schema_id;
   public String hours_123;
- 
-  private DBUtils db = DBUtils.getInstance();
   
    
   public Employee(int emp_id,

@@ -7,6 +7,7 @@ package se.iths.gui;
   import se.iths.app.Employee;
   import se.iths.app.KKtyp;
   import se.iths.app.KKtypSql;
+  import se.iths.app.VolymSql;
 
   import java.util.Scanner;
   import java.util.ArrayList;
@@ -20,6 +21,7 @@ package se.iths.gui;
     private TruckSql tdb = new TruckSql();
     private EmployeeSql empdb = new EmployeeSql();
     private KKtypSql kkdb = new KKtypSql();
+    private VolymSql vdb = new  VolymSql();
     
     private boolean exit;
     private Scanner sc = new Scanner(System.in);
@@ -53,9 +55,16 @@ package se.iths.gui;
         case 1: // Boka kaj
           System.out.println("Make a vessel call");
           int i = menuInput(8);
-          pickBerth(i);
+          vdb.vesselCallType(i);
+       //   pickBerth(i);
         break;
 
+        
+        case 2: // Reports
+          System.out.println("Get some nice reads");
+          break;
+          
+          
         case 3: // Handle personel
           System.out.println("Manage employees");
           employeeList = empdb.getFullEmployeeList();
@@ -75,10 +84,11 @@ package se.iths.gui;
             }
           break;
 
+          
         case 4: // Handle machinery
           System.out.println("Manage inventory");
-          truckList = tdb.getFullTruckList();
-
+          tdb.selectTruckByKK(menuInput(8));
+      /*    truckList = tdb.selectTruckByKK(menuInput(8));
           System.out.print(truckList.size());
           for (Truck t : truckList) {
             String s = t.truckID() + "  " + t.truckType() + "  " + t.truckStatus();
@@ -90,12 +100,9 @@ package se.iths.gui;
               System.out.print(s);
             }
             System.out.println("");
-          }
+          }*/
           break;
 
-        case 2: // Reports
-          System.out.println("Get some nice reads");
-          break;
           
         case 5: // quit
           System.out.println("Good Bye!");

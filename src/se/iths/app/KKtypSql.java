@@ -1,6 +1,6 @@
 package se.iths.app;
 
-import java.util.*;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -51,6 +51,7 @@ public class KKtypSql {
       System.err.println("Retrieving 'selectEmpsByKK': " + e.getMessage());
       db.closeIt(rs);
     }
+    
     for (int i = 0; i < empListKK.size(); i = i + 3) {
       tmpEmpList.add((Employee) empListKK.get(i));
       tmpKKList.add((KKtyp) empListKK.get(i + 1));
@@ -77,15 +78,24 @@ public class KKtypSql {
      * Weed out inappropriate working hours, days, %
      */
     
+ 
+    
     for (int i = 0; i < empList.size(); i ++) {
-      System.out.print(empList.get(i).emp_id() + " ");
+      if (empList.get(i).emp_id() < 10) {
+        System.out.print("  " + empList.get(i).emp_id() + " ");        
+      } else if (empList.get(i).emp_id() < 100) {
+        System.out.print(" " + empList.get(i).emp_id() + " ");   
+      } else {
+        System.out.print(empList.get(i).emp_id() + " ");
+      }
       System.out.print(empList.get(i).f_name() + " ");
       System.out.print(empList.get(i).s_name() + " ");
       System.out.print(kkList.get(i).kk_namn() + " ");
       System.out.println(statList.get(i));
     }
 
-    System.out.print("Employee count matching criteria: " + counter);
+    System.out.println("Employee count matching criteria: " + counter);
+    System.out.println("- - - ");
   }
 
   private void komigen() {

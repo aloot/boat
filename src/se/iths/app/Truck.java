@@ -25,13 +25,13 @@ public class Truck {
   }
   
   
-  public int truckID() {
+  public int truck_id() {
    return this.truck_id; 
   }
-  public int truckType() {
+  public int tr_typ_id() {
     return this.tr_typ_id;
   }
-  public int truckStatus() {
+  public int tr_status_id() {
     return this.tr_status_id;
   }
   
