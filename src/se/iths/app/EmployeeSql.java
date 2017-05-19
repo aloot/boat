@@ -3,7 +3,10 @@ package se.iths.app;
 import java.util.*;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
- 
+ // select med namn istället för id (join mot andra tabeller)
+// insert
+// update av namn, schema, körkort och empstatus - innan bör kontroll ske att id finns i tabeller
+// delete - bör inte kunna ske istället sker en update av emp_status till "Slutat"
 
 public class EmployeeSql {
 
@@ -11,7 +14,8 @@ public class EmployeeSql {
 
     public ArrayList<Employee> getFullEmployeeList(){
       ArrayList<Employee> employeeList = new ArrayList<Employee>();
-//      String SQL = "SELECT * from t.*, tt.*, ts.* FROM truck t, trucktyp tt, trstatus ts WHERE t.tr_typ_id = tt.tr_typ_id and t.tr_status_id = ts.tr_status_id LIMIT 20";
+//      select emp.f_name, emp.s_name, kk.kk_namn,es.empstatus_namn, sch.schema_namn from employee emp, kktyp kk, empstatus es, empschema sch where emp.kk_id = kk.kk_id and emp.empstatus_id = es.empstatus_id and emp.schema_id = sch.schema_id limit 20;
+
       String SQL = "SELECT * from employee";  
       ResultSet rs = db.executeQuery(SQL);
       //ResultSet rs = db.executeQuery("SELECT * FROM movie ORDER BY id_movie");
@@ -72,7 +76,10 @@ public class EmployeeSql {
      * Inserts m into the database and sets the id of m to the
      * MunicipalityID it gets.
      */
-/*    public void addReview(Review r){
+/*    grund insert emp
+ * insert into employee(f_name, s_name, kk_id, empstatus_id, schema_id) values ('Alex', 'Morelatus', 1, 1, 1);
+
+ * public void addReview(Review r){
       //int id=r.id();
       int id_movie = r.id_movie();
       int score = r.score();
