@@ -10,8 +10,7 @@ public class Truck {
   
 
   private DBUtils db = DBUtils.getInstance();
-  
-  
+
   
   public Truck(int truck_id, int tr_typ_id, int tr_status_id) {
     this.truck_id = truck_id;
@@ -26,13 +25,13 @@ public class Truck {
   }
   
   
-  public int truckID() {
+  public int truck_id() {
    return this.truck_id; 
   }
-  public int truckType() {
+  public int tr_typ_id() {
     return this.tr_typ_id;
   }
-  public int truckStatus() {
+  public int tr_status_id() {
     return this.tr_status_id;
   }
   

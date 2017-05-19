@@ -2,36 +2,116 @@ package se.iths.app;
 
 import java.util.*;
 import java.sql.ResultSet;
-import java.sql.PreparedStatement;
- 
+
+import se.iths.app.Truck;
+import se.iths.app.TruckTyp;
 
 public class TruckSql {
 
   DBUtils db = DBUtils.getInstance();
 
-    public ArrayList<Truck> getFullTruckList(){
-      ArrayList<Truck> truckList = new ArrayList<Truck>();
-//      String SQL = "SELECT * from t.*, tt.*, ts.* FROM truck t, trucktyp tt, trstatus ts WHERE t.tr_typ_id = tt.tr_typ_id and t.tr_status_id = ts.tr_status_id LIMIT 20";
-      String SQL = "SELECT * from truck";  
+    public void selectTruckByKK(int kkType){
+      ArrayList<Object> truckList = new ArrayList<Object>();
+      ArrayList<Truck> tmpTList = new ArrayList<>();
+      ArrayList<TruckTyp> tmpTTList = new ArrayList<>();
+      ArrayList<String> tmpStatList = new ArrayList<>();
+      ArrayList<Truck> tList = new ArrayList<>();
+      ArrayList<TruckTyp> ttList = new ArrayList<>();
+      ArrayList<String> statList = new ArrayList<>();
+      ArrayList<Integer> keepList = null;
+      
+      int counter = 0;
+//      String SQL = "SELECT * from truck limit 30";
+      String SQL = "SELECT t.truck_id, t.tr_typ_id, t.tr_status_id, "
+          + "tt.tr_typ_namn, tt.tr_typ_pris, ts.tr_status_namn "
+          + "FROM truck t, trucktyp tt, truckstatus ts "
+          + "WHERE t.tr_typ_id = tt.tr_typ_id "
+          + "AND t.tr_status_id = ts.tr_status_id AND tt.tr_typ_id =" + kkType; 
       ResultSet rs = db.executeQuery(SQL);
-      //ResultSet rs = db.executeQuery("SELECT * FROM movie ORDER BY id_movie");
-      //"SELECT ma.character, a.*, m.* FROM movie_actor ma, actor a, movie m 
-      //WHERE ma.id_movie ='" + id_movie + "' and ma.id_actor = a.id_actor and ma.id_movie = m.id_movie";
       try{
         Truck t = null;
+        TruckTyp tt = null;
+        String trStat = null;
         while(rs.next()){
           t = new Truck(rs.getInt("truck_id"),
-                          rs.getInt("tr_typ_id"),
-                          rs.getInt("tr_status_id"));
+              rs.getInt("tr_typ_id"),
+              rs.getInt("tr_status_id"));
           truckList.add(t);
+          tt = new TruckTyp(rs.getString("tr_typ_namn"),
+              rs.getInt("tr_typ_pris"));
+          truckList.add(tt);
+          trStat = rs.getString("tr_status_namn");
+          truckList.add(trStat);
         }
         db.closeIt(rs);
-        return truckList;
       } catch (Exception e){
-        System.err.println("Retrieving list of trucks: " + e.getMessage());
+        System.err.println("Retrieving selectTruckByKK: " + e.getMessage());
         db.closeIt(rs);
       }
-      return null;
+      /**
+       * Get big sql-list sorted
+       */
+      for (int i = 0; i < truckList.size(); i = i + 3) {
+        tmpTList.add((Truck) truckList.get(i));
+        tmpTTList.add((TruckTyp) truckList.get(i + 1));
+        tmpStatList.add((String) truckList.get(i + 2));
+      }
+      /**
+       * Populate a keep-list
+       */
+ //     System.out.println(tmpTList.size());
+      keepList = new ArrayList<>();
+      for (int i = 0; i < tmpTList.size(); i ++) {
+        if (tmpTList.get(i).tr_status_id() == 1 || tmpTList.get(i).tr_status_id() == 3) {
+          keepList.add(i);
+ //         System.out.println("keepL: " + keepList);
+ //         System.out.println("truck: " + tmpTList.get(i).truck_id() + ": " + tmpTList.get(i).tr_status_id());
+        }
+      }
+ //     System.out.println("keepL: " + keepList);
+ //     System.out.println(keepList.size());
+
+      if (keepList.size() < tmpTList.size()) {
+        for (int i = 0; i < keepList.size(); i ++) {
+          tList.add(tmpTList.get(keepList.get(i)));
+          ttList.add(tmpTTList.get(keepList.get(i)));
+          statList.add(tmpStatList.get(keepList.get(i)));
+          counter ++;
+        }
+      }
+      
+      
+      for (int i = 0; i < statList.size(); i ++) {
+        if (tList.get(i).truck_id() < 10) {
+          System.out.print("  " + tList.get(i).truck_id() + " ");
+        } else if (tList.get(i).truck_id() < 100) {
+          System.out.print(" " + tList.get(i).truck_id() + " ");
+        } else {
+          System.out.print(tList.get(i).truck_id() + " ");
+        }
+        System.out.print(ttList.get(i).tr_typ_namn() + " ");
+        System.out.print(ttList.get(i).tr_typ_pris() + " ");
+        System.out.println(statList.get(i));
+      }
+      System.out.println("Trucks matching search criteria: " + counter);
+
+      System.out.println("- - - ");
+      
+/*      for (int i = 0; i < tmpStatList.size(); i ++) {
+        if (tmpStatList.get(i).indexOf('%') > 0) {
+          keepList.add(i);
+        }
+      }
+      System.out.println("keepL: " + keepList);
+      
+      
+      if (keepList.size() < tmpEmpList.size()) {
+        for (int i = 0; i < keepList.size(); i ++) {
+          empList.add(tmpEmpList.get(keepList.get(i)));
+          kkList.add(tmpKKList.get(keepList.get(i)));
+          statList.add(tmpStatList.get(keepList.get(i)));
+          counter ++;
+        }*/
     }
 
  /*   public List<Truck> getAllReviewsFullData(){
