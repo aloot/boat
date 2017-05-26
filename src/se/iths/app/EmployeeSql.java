@@ -4,7 +4,7 @@ import se.iths.app.Employee;
 
 import java.util.*;
 import java.sql.ResultSet;
- // select med namn istället för id (join mot andra tabeller)
+ // klar - select med namn istället för id (join mot andra tabeller)
 // insert
 // update av namn, schema, körkort och empstatus - innan bör kontroll ske att id finns i tabeller
 // delete - bör inte kunna ske istället sker en update av emp_status till "Slutat"
@@ -15,14 +15,8 @@ public class EmployeeSql {
 
     public ArrayList<Employee> getFullEmployeeList(){
       ArrayList<Employee> employeeList = new ArrayList<Employee>();
-//      select emp.f_name, emp.s_name, kk.kk_namn,es.empstatus_namn, sch.schema_namn from employee emp, kktyp kk, empstatus es, empschema sch where emp.kk_id = kk.kk_id and emp.empstatus_id = es.empstatus_id and emp.schema_id = sch.schema_id limit 20;
-
       String SQL = "SELECT * from employee";  
       ResultSet rs = db.executeQuery(SQL);
-      //ResultSet rs = db.executeQuery("SELECT * FROM movie ORDER BY id_movie");
-      //"SELECT ma.character, a.*, m.* FROM movie_actor ma, actor a, movie m 
-      //WHERE ma.id_movie ='" + id_movie + "' and ma.id_actor = a.id_actor and ma.id_movie = m.id_movie";
-//    select emp.f_name, emp.s_name, kk.kk_namn,es.empstatus_namn, sch.schema_namn from employee emp, kktyp kk, empstatus es, empschema sch where emp.kk_id = kk.kk_id and emp.empstatus_id = es.empstatus_id and emp.schema_id = sch.schema_id limit 20;
       try{
         Employee emp = null;
         while(rs.next()){
@@ -44,23 +38,12 @@ public class EmployeeSql {
       return null;
     }
     
-//
-//
-    //
-    //
-    //
-    //
     public void getEmployeeListNames(){
     	ArrayList<Object> empListAll = new ArrayList<Object>();
-        ArrayList<Employee> tmpEmpList = new ArrayList<Employee>();
         ArrayList<Employee> empList = new ArrayList<Employee>();
-        ArrayList<KKtyp> tmpKKList = new ArrayList<KKtyp>();
         ArrayList<KKtyp> kkList = new ArrayList<KKtyp>();
-        ArrayList<String> tmpStatList = new ArrayList<String>();
         ArrayList<String> statList = new ArrayList<String>();
-        ArrayList<String> tmpSchemaList = new ArrayList<String>();
         ArrayList<String> schemaList = new ArrayList<String>();
-        ArrayList<Integer> keepList = new ArrayList<Integer>();
         int counter = 0;
     
         String SQL = "select emp.emp_id, emp.f_name, emp.s_name, kk.kk_namn,es.empstatus_namn, sch.schema_namn"
@@ -93,43 +76,11 @@ public class EmployeeSql {
         }
         
         for (int i = 0; i < empListAll.size(); i = i + 4) {
-          tmpEmpList.add((Employee) empListAll.get(i));
-          tmpKKList.add((KKtyp) empListAll.get(i + 1));
-          tmpStatList.add((String) empListAll.get(i + 2));
+          empList.add((Employee) empListAll.get(i));
+          kkList.add((KKtyp) empListAll.get(i + 1));
+          statList.add((String) empListAll.get(i + 2));
           schemaList.add((String) empListAll.get(i + 3));
         }
-        for (int i = 0; i < tmpStatList.size(); i ++) {
-        	keepList.add(i);}
-          //if (tmpStatList.get(i).indexOf('%') > 0) {
-          //           keepList.add(i);
-          //}
-             //    }
-       for (int i = 0; i < tmpSchemaList.size(); i ++) {
-            //if (tmpSchemaList.get(i).indexOf('%') > 0) {
-              keepList.add(i);
-            //}
-          }
-       
-        System.out.println("keepL: " + keepList);
-        
-        
-            for (int i = 0; i < keepList.size(); i ++) {
-              empList.add(tmpEmpList.get(keepList.get(i)));
-              kkList.add(tmpKKList.get(keepList.get(i)));
-              statList.add(tmpStatList.get(keepList.get(i)));
-              counter ++;
-            }
-          
-        /*
-        if (keepList.size() < tmpEmpList.size()) {
-          for (int i = 0; i < keepList.size(); i ++) {
-            empList.add(tmpEmpList.get(keepList.get(i)));
-            kkList.add(tmpKKList.get(keepList.get(i)));
-            statList.add(tmpStatList.get(keepList.get(i)));
-            counter ++;
-          }
-        }
-        */
         System.out.println("empL: " + empList.size());
         
         for (int i = 0; i < empList.size(); i ++) {
@@ -146,62 +97,11 @@ public class EmployeeSql {
           System.out.print(statList.get(i) + " ");
           System.out.println(schemaList.get(i));
         }
-        
-////////////////////////////////77
-        /*
-        for (int i = 0; i < empListAll.size(); i ++) {
-            if (empList.get(i).emp_id() < 100) {
-              System.out.print("  " + empList.get(i).emp_id() + " ");        
-            } else if (empList.get(i).emp_id() < 1000) {
-              System.out.print(" " + empList.get(i).emp_id() + " ");   
-            } else {
-              System.out.print(empList.get(i).emp_id() + " ");
-            }
-            System.out.print(empList.get(i).f_name() + " ");
-            System.out.print(empList.get(i).s_name() + " ");
-            System.out.print(kkList.get(i).kk_namn() + " ");
-            System.out.print(statList.get(i) + " ");
-            System.out.println(schemaList.get(i));
-          }        
-    */
-/////////////////////////////////        
+      
         System.out.println("Employee count matching criteria: " + counter);
         System.out.println("- - - ");
       }
-
-  /////////      
-//  }
-//  return null;
-//}
-//    
-//
-//
-//
-//
-//
- /*   public List<Truck> getAllReviewsFullData(){
-      ArrayList<Truck> reviewList = new ArrayList<Truck>();
-      ResultSet rs = db.executeQuery("SELECT * FROM review order by lower(author)  asc");
-      try{
-        Review r = null;
-        while(rs.next()){
-          r = new Review(rs.getInt("id_review"),
-                             rs.getInt("id_movie"),
-                             rs.getInt("score"),
-                             rs.getString("author"),
-                             rs.getString("review")
-                             );
-          r.setID(rs.getInt("id_review"));
-          reviewList.add(r);
-        }
-        db.closeIt(rs);
-        return reviewList;
-      } catch (Exception e){
-        System.err.println("Getting all reviews: " + e.getMessage());
-        db.closeIt(rs);
-      }
-      return null;
-    }
+ /*  
 
     public void deleteReview(int id_review){
 //      int id_review = r.id_review();
@@ -217,18 +117,22 @@ public class EmployeeSql {
 /*    grund insert emp
  * insert into employee(f_name, s_name, kk_id, empstatus_id, schema_id) values ('Alex', 'Morelatus', 1, 1, 1);
 
- * public void addReview(Review r){
-      //int id=r.id();
-      int id_movie = r.id_movie();
-      int score = r.score();
-      String author = r.author();
-      String review = r.review();
-      String SQL = "INSERT INTO review " +
-        "(id_movie, score, author, review)" +
-        " VALUES('" + id_movie + "', " +
-        "'" + score + "', " +
-        "'" + author + "', " +
-        "'" + review + "')";
+ * public void addEmployee(Employee e){
+      //int id=e.id();
+      //int id_employee = e.id_employee();
+      String f_name = e.f_name();
+      String s_name = e.s_name();
+      int kk_id = e.kk_id();
+      int empstatus_id = e.empstatus_id();
+      int schema_id = e.schema_id();
+      
+      String SQL = "INSERT INTO employee " +
+        "(f_name, s_name, kk_id, empstatus_id schema_id)" +
+        " VALUES('" + f_name + "', " +
+        "'" + s_name + "', " +
+        "'" + kk_id + "', " +
+        "'" + empstatus_id + "', " +
+        "'" + schema_id + "')";
 
 //        System.out.println("sql-et: " + SQL);
       System.out.println(db.executeUpdate(SQL)+
@@ -240,7 +144,7 @@ public class EmployeeSql {
                                      " WHERE review ='" + review + "'");
       try{
         rs.next();
-        r.setID(rs.getInt("id_review"));
+        r.setID(rs.getInt("id_employee"));
       } catch (Exception e){
         System.err.println("Getting ID: " + e.getMessage());
       } finally {
