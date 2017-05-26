@@ -25,8 +25,7 @@ public class EmployeeSql {
                           rs.getString("s_name"),
                           rs.getInt("kk_id"),
                           rs.getInt("empstatus_id"),
-                          rs.getInt("schema_id"),
-                          rs.getString("hours_123"));
+                          rs.getInt("schema_id"));
           employeeList.add(emp);
         }
         db.closeIt(rs);
@@ -38,7 +37,33 @@ public class EmployeeSql {
       return null;
     }
     
-
+    public void getEmpFromID(int emp_id){
+      ArrayList<Employee> employeeList = new ArrayList<Employee>();
+      String SQL = "SELECT e.emp_id, e.f_name, e.s_name, kk.kk_id, es.empstatus_id, esch.schema_id "
+          + "FROM employee e, kktyp kk, empstatus es, empschema esch "
+          + "WHERE emp_id = " + emp_id + " AND e.kk_id = kk.kk_id AND e.empstatus_id = es.empstatus_id "
+              + "AND e.schema_id = esch.schema_id";  
+      ResultSet rs = db.executeQuery(SQL);
+      try{
+        Employee emp = null;
+        while(rs.next()){
+          emp = new Employee(rs.getInt("emp_id"),
+                          rs.getString("f_name"),
+                          rs.getString("s_name"),
+                          rs.getInt("kk_id"),
+                          rs.getInt("empstatus_id"),
+                          rs.getInt("schema_id"));
+          employeeList.add(emp);
+        }
+        db.closeIt(rs);
+      } catch (Exception e){
+        System.err.println("Retrieving list of employee: " + e.getMessage());
+        db.closeIt(rs);
+      }
+      for (int i = 1; i < employeeList.size(); i ++) {
+        System.out.println(employeeList.get(i));
+      }
+    }
 
  /*   public List<Truck> getAllReviewsFullData(){
       ArrayList<Truck> reviewList = new ArrayList<Truck>();

@@ -32,7 +32,7 @@ package se.iths.gui;
     public void runMenu() {
       printMenu();
       while(!exit) {
-        int menuChoice = menuInput(5);
+        int menuChoice = menuInput(6);
         firstChoice(menuChoice);
       }
     }
@@ -43,6 +43,7 @@ package se.iths.gui;
       System.out.println("3. Manage personel");
       System.out.println("4. Manage inventory");
       System.out.println("5. Quit");
+      System.out.println("6. TMP");
     }
     //-------------------------------------//
   /*
@@ -70,7 +71,7 @@ package se.iths.gui;
           employeeList = empdb.getFullEmployeeList();
           for (Employee emp: employeeList) {
             String s = emp.emp_id() + " " + emp.f_name() + " " + emp.s_name() + "  " + emp.kk_id()  + "  " + 
-                      emp.empstatus_id() + "  " + emp.schema_id() + "  " + emp.hours_123();
+                      emp.empstatus_id() + "  " + emp.schema_id();
             if (emp.emp_id() < 10) {
               System.out.println("  " + s);
             } else if (emp.emp_id() < 100) {
@@ -85,28 +86,24 @@ package se.iths.gui;
           break;
 
           
-        case 4: // Handle machinery
+        case 4: // Manage machinery
           System.out.println("Manage inventory");
           tdb.selectTruckByKK(menuInput(8));
-      /*    truckList = tdb.selectTruckByKK(menuInput(8));
-          System.out.print(truckList.size());
-          for (Truck t : truckList) {
-            String s = t.truckID() + "  " + t.truckType() + "  " + t.truckStatus();
-            if (t.truckID() < 10) {
-              System.out.print("  " + s);
-            } else if (t.truckID() < 100) {
-              System.out.print(" " + s);
-            } else {
-              System.out.print(s);
-            }
-            System.out.println("");
-          }*/
+
+
           break;
 
           
         case 5: // quit
           System.out.println("Good Bye!");
           System.exit(0);
+          break;
+          
+        case 6:
+          System.out.println("Dev block");
+//          empdb.getEmpFromID(menuInput(600));
+//          empdb.getEmpFromID(400);
+          
           break;
          
         default:
@@ -129,7 +126,9 @@ package se.iths.gui;
         } catch (NumberFormatException e) {
           System.out.println(invalidInput);
         }
-      } return menuChoice;
+//        return menuChoice;
+      }
+      return menuChoice;
     }
 
     private void pickBerth(int i) {

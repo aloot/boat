@@ -30,7 +30,7 @@ public class KKtypSql {
     
     String SQL = "SELECT e.emp_id, e.f_name, e.s_name, kk.kk_namn, es.empstatus_namn "
         + "FROM employee e, kktyp kk,  empstatus es "
-        + "WHERE e.kk_id = " + kkType + " AND kk.kk_id = " + kkType ;
+        + "WHERE e.kk_id = kk.kk_id AND e.empstatus_id = es.empstatus_id AND e.kk_id = " + kkType;
     ResultSet rs = db.executeQuery(SQL);
     Employee emp = null;
     KKtyp kk = null;
@@ -51,18 +51,20 @@ public class KKtypSql {
       System.err.println("Retrieving 'selectEmpsByKK': " + e.getMessage());
       db.closeIt(rs);
     }
+    System.out.println("empListKK.size: " + empListKK.size());
     
     for (int i = 0; i < empListKK.size(); i = i + 3) {
       tmpEmpList.add((Employee) empListKK.get(i));
       tmpKKList.add((KKtyp) empListKK.get(i + 1));
       tmpStatList.add((String) empListKK.get(i + 2));
     }
+
     for (int i = 0; i < tmpStatList.size(); i ++) {
       if (tmpStatList.get(i).indexOf('%') > 0) {
         keepList.add(i);
       }
     }
-    System.out.println("keepL: " + keepList);
+    System.out.println("keepL: " + keepList.size());
     
     
     if (keepList.size() < tmpEmpList.size()) {
@@ -72,8 +74,15 @@ public class KKtypSql {
         statList.add(tmpStatList.get(keepList.get(i)));
         counter ++;
       }
+    } else {
+      empList = new ArrayList<>(tmpEmpList);
+      kkList = new ArrayList<>(tmpKKList);
+      statList = new ArrayList<>(tmpStatList);
+      counter = statList.size();
     }
     System.out.println("empL: " + empList.size());
+    
+    
     /**
      * Weed out inappropriate working hours, days, %
      */
