@@ -19,12 +19,13 @@ package se.iths.gui;
     private String invalidInput = "\n- - - Invalid input, please try again";
 
     private TruckSql tdb = new TruckSql();
-    private EmployeeSql empdb = new EmployeeSql();
+    private EmployeeSql empdb = new EmployeeSql();  
     private KKtypSql kkdb = new KKtypSql();
     private VolymSql vdb = new  VolymSql();
     
     private boolean exit;
     private Scanner sc = new Scanner(System.in);
+    private ArrayList<Employee> empListNames = new ArrayList<Employee>();
     private ArrayList<Truck> truckList = new ArrayList<Truck>();
     private ArrayList<Employee> employeeList = new ArrayList<Employee>();
         
@@ -67,10 +68,12 @@ package se.iths.gui;
           
         case 3: // Handle personel
           System.out.println("Manage employees");
-          employeeList = empdb.getFullEmployeeList();
-          for (Employee emp: employeeList) {
+        //  employeeList = empdb.getFullEmployeeList();
+          empdb.getEmployeeListNames();
+          
+      /*    for (Employee emp: employeeList) {
             String s = emp.emp_id() + " " + emp.f_name() + " " + emp.s_name() + "  " + emp.kk_id()  + "  " + 
-                      emp.empstatus_id() + "  " + emp.schema_id() + "  " + emp.hours_123();
+                      emp.empstatus_id() + "  " + emp.schema_id();
             if (emp.emp_id() < 10) {
               System.out.println("  " + s);
             } else if (emp.emp_id() < 100) {
@@ -82,6 +85,8 @@ package se.iths.gui;
  //               " " +  emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id());
  //             System.out.println("");
             }
+            
+            */
           break;
 
           
