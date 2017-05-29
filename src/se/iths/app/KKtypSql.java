@@ -51,8 +51,8 @@ public class KKtypSql {
       System.err.println("Retrieving 'selectEmpsByKK': " + e.getMessage());
       db.closeIt(rs);
     }
-    System.out.println("empListKK.size: " + empListKK.size());
     
+    System.out.println("empListKK.size: " + empListKK.size());
     for (int i = 0; i < empListKK.size(); i = i + 3) {
       tmpEmpList.add((Employee) empListKK.get(i));
       tmpKKList.add((KKtyp) empListKK.get(i + 1));

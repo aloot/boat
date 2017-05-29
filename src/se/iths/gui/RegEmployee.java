@@ -3,7 +3,10 @@ package se.iths.gui;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Employee {
+import se.iths.gui.RegEmployee;
+import se.iths.gui.RegBoats;
+
+public class RegEmployee {
 
 	public ArrayList<String> addEmpList = new ArrayList<String>(5);
 	private String fName     = "";
@@ -34,7 +37,7 @@ public class Employee {
 				System.out.print("\n'First name' can not be empty, please enter a name: ");
 				fName = sc.nextLine();
 			
-			}while (sName.matches(".*\\d.*")){
+			} while (sName.matches(".*\\d.*")){
 					System.out.println("\n'The persons last name cannot contain digits, please enter a valid name !");
 					sName = sc.nextLine();
 				}
@@ -44,7 +47,8 @@ public class Employee {
 					sName = sc.nextLine();
 				}
 
-			}while (fName.trim().isEmpty());
+		}
+		while (fName.trim().isEmpty());
 			String newfName = fName.trim();
 			addEmpList.set(0, newfName);
 
