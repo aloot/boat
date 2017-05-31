@@ -7,6 +7,7 @@ public class VolymSql {
 
   DBUtils db = DBUtils.getInstance();
 
+  // TODO - ta fram kk_id, kaj_id istället för index-siffra
   public void vesselCallType(int volTyp) {
     
     Volym vol = null;

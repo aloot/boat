@@ -16,7 +16,8 @@ boaty
 
 # Mappar som ska exkluderas
 driver/
-#src/se/iths/driver/
+src/se/iths/driver/
+z_src
 
 *target*
 

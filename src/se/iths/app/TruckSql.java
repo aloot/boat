@@ -59,7 +59,7 @@ public class TruckSql {
       /**
        * Populate a keep-list
        */
- //     System.out.println(tmpTList.size());
+
       keepList = new ArrayList<>();
       for (int i = 0; i < tmpTList.size(); i ++) {
         if (tmpTList.get(i).tr_status_id() == 1 || tmpTList.get(i).tr_status_id() == 3) {
@@ -78,6 +78,11 @@ public class TruckSql {
           statList.add(tmpStatList.get(keepList.get(i)));
           counter ++;
         }
+      } else {
+        tList = new ArrayList<>(tmpTList);
+        ttList = new ArrayList<>(tmpTTList);
+        statList = new ArrayList<>(tmpStatList);
+        counter = statList.size();
       }
       
       
@@ -96,22 +101,6 @@ public class TruckSql {
       System.out.println("Trucks matching search criteria: " + counter);
 
       System.out.println("- - - ");
-      
-/*      for (int i = 0; i < tmpStatList.size(); i ++) {
-        if (tmpStatList.get(i).indexOf('%') > 0) {
-          keepList.add(i);
-        }
-      }
-      System.out.println("keepL: " + keepList);
-      
-      
-      if (keepList.size() < tmpEmpList.size()) {
-        for (int i = 0; i < keepList.size(); i ++) {
-          empList.add(tmpEmpList.get(keepList.get(i)));
-          kkList.add(tmpKKList.get(keepList.get(i)));
-          statList.add(tmpStatList.get(keepList.get(i)));
-          counter ++;
-        }*/
     }
 
  /*   public List<Truck> getAllReviewsFullData(){

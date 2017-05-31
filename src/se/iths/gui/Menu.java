@@ -18,7 +18,12 @@ package se.iths.gui;
   import java.text.DecimalFormat;
 
   public class Menu {
-    private String enterSelection = "\n- - - Your choice: ";
+    private String mmMsg = "- - - Main menu, enter your choice: ";
+    private String trMsg = "- Truck menu, enter your choice: ";
+    private String empMsg = "- Employee menu, enter your choice: ";
+    private String empMsgAskAgain = "- Employee menu, enter your choice: ";
+    private String vMsg = "- Vessel call menu, enter your choice: ";
+    
     private String invalidInput = "\n- - - Invalid input, please try again";
 
     private TruckSql tdb = new TruckSql();
@@ -37,17 +42,19 @@ package se.iths.gui;
     public void runMenu() {
       printMenu();
       while(!exit) {
-        int menuChoice = menuInput(5);
+        int menuChoice = menuInput(mmMsg, 6);
         firstChoice(menuChoice);
       }
     }
   //-----------------------------//
     public void printMenu() {
+      System.out.println("- - -");
       System.out.println("1. Vessel calls");
       System.out.println("2. Get a report");
       System.out.println("3. Manage personel");
       System.out.println("4. Manage inventory");
       System.out.println("5. Quit");
+      System.out.println("6. TMP");
     }
     //-------------------------------------//
   /*
@@ -59,69 +66,44 @@ package se.iths.gui;
       switch(menuChoice) {
         case 1: // Boka kaj
           System.out.println("Make a vessel call");
-          int i = menuInput(8);
+          int i = menuInput(vMsg, 8);
           vdb.vesselCallType(i);
        //   pickBerth(i);
+          printMenu();
         break;
-
         
         case 2: // Reports
-          System.out.println("Get some nice reads");
+          System.out.println("\nGet some nice reads");
+          printMenu();
           break;
-          
-          
+         
         case 3: // Handle personel
-          System.out.println("Manage employees");
+          System.out.println("\nManage employees");
         //  employeeList = empdb.getFullEmployeeList();
    //       empdb.getEmployeeListNames();
-          
-      /*    for (Employee emp: employeeList) {
-            String s = emp.emp_id() + " " + emp.f_name() + " " + emp.s_name() + "  " + emp.kk_id()  + "  " + 
-                      emp.empstatus_id() + "  " + emp.schema_id();
-            if (emp.emp_id() < 10) {
-              System.out.println("  " + s);
-            } else if (emp.emp_id() < 100) {
-              System.out.println(" " + s);
-            } else {
-              System.out.println(s);
-            }
- //           System.out.print(emp.emp_id() < 10 ? " " + emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id() : 
- //               " " +  emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id());
- //             System.out.println("");
-            }
-            
-            */
-          AddEmployee addEmployee = new AddEmployee();       
-          addEmployeeList = addEmployee.addEmp();
-          Employee emp = new Employee(addEmployeeList);
-          System.out.println("\n" + emp);
-          empdb.addEmployee(emp);
-          //mdb.addMovie(m);
-
-          ///
-          
-        case 4: // Handle machinery
-          System.out.println("Manage inventory");
-          tdb.selectTruckByKK(menuInput(8));
-      /*    truckList = tdb.selectTruckByKK(menuInput(8));
-          System.out.print(truckList.size());
-          for (Truck t : truckList) {
-            String s = t.truckID() + "  " + t.truckType() + "  " + t.truckStatus();
-            if (t.truckID() < 10) {
-              System.out.print("  " + s);
-            } else if (t.truckID() < 100) {
-              System.out.print(" " + s);
-            } else {
-              System.out.print(s);
-            }
-            System.out.println("");
-          }*/
+          printEmpMenu();
+          manageEmployees();
+          printMenu();
           break;
 
+        case 4: // Manage machinery
+          System.out.println("Manage inventory");
+          tdb.selectTruckByKK(menuInput(trMsg, 8));
+          printMenu();
+          break;
           
         case 5: // quit
           System.out.println("Good Bye!");
           System.exit(0);
+          Employee emp = new Employee(addEmployeeList);
+          System.out.println("\n" + emp);
+          empdb.addEmployee(emp);
+          //mdb.addMovie(m);
+          
+        case 6:
+          System.out.println("Dev block");
+//          empdb.getEmpFromID(menuInput(600));
+//          empdb.getEmpFromID(400);          
           break;
          
         default:
@@ -129,14 +111,90 @@ package se.iths.gui;
           break;
       } 
     }
-
   //------------------------//
+    public void printEmpMenu() {
+      System.out.println("1. Search for employee by name");
+      System.out.println("2. Search for employee by id");
+      System.out.println("3. Add employee");
+      System.out.println("4. getEmployeeListNames");
+      System.out.println("5. emp 5");
+    }
+  //------------------------//
+    public void manageEmployees() {
+//      RegEmployee rEmp = new RegEmployee();
+      int choice = menuInput(empMsg, 5);
+      switch (choice) {
+      case 1:
+        System.out.println("- Search for employee by name - first search");
+        String wanted = sc.nextLine();
+        empdb.searchOnName(wanted);
+        firstSearch();
+        break;
+
+      case 2:
+        System.out.println("Search for employee by id");
+        int wantedNr = Integer.parseInt(sc.nextLine());
+        empdb.searchOnNr(wantedNr);
+        break;
+
+      case 3:
+        System.out.println("Add employee");
+        /*        ArrayList<String> newEmp = rEmp.addEmp();
+        for (String s : newEmp) {
+ //         System.out.println(s);
+        }*/
+        break;
+
+      case 4:
+        System.out.println("getEmployeeListNames, 4");
+        empdb.getEmployeeListNames(empMsg);
+        break;
+
+      case 5:
+        System.out.println("emp menu, 5");
+        break;
+        
+        default:
+          System.out.println(invalidInput);
+          break;          
+      }
+    }
+    public void firstSearch() {
+      System.out.println("\n1. Another search");
+      System.out.println("2. Edit employee by id number");
+      System.out.println("2. Back to main menu");
+      anotherSearch(menuInput(empMsgAskAgain, 3)); 
+    }
+    public void anotherSearch(int choice){
+      switch (choice) {
+      case 1:
+        System.out.println("Another search: ");
+        System.out.println("- Search for employee by name - another");
+        String wanted = sc.nextLine();
+        empdb.searchOnName(wanted);
+        firstSearch();
+        break;
+        
+      case 2:
+        int empId = Integer.parseInt(sc.nextLine());
+        empdb.searchOnNr(empId);
+        break;
+        
+      case 3:
+        System.out.println("Back to main menu!");
+        break;
+
+      default:
+        System.out.println(invalidInput);
+        break;
+      }
+    }
   
-    public int menuInput(int maxInt) {
+    public int menuInput(String menuMsg, int maxInt) {
       int menuChoice = -1;
       while (menuChoice < 0 || menuChoice > maxInt) {
         try {
-          System.out.print(enterSelection);
+          System.out.print(menuMsg);
           menuChoice = Integer.parseInt(sc.nextLine());
           if (menuChoice < 1 || menuChoice > maxInt) {
             System.out.println(invalidInput);
@@ -144,7 +202,8 @@ package se.iths.gui;
         } catch (NumberFormatException e) {
           System.out.println(invalidInput);
         }
-      } return menuChoice;
+      }
+      return menuChoice;
     }
 
     private void pickBerth(int i) {
