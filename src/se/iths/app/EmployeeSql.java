@@ -114,37 +114,39 @@ public class EmployeeSql {
      * Inserts m into the database and sets the id of m to the
      * MunicipalityID it gets.
      */
-/*    grund insert emp
- * insert into employee(f_name, s_name, kk_id, empstatus_id, schema_id) values ('Alex', 'Morelatus', 1, 1, 1);
+ // Insert Employee
+ // insert into employee(f_name, s_name, kk_id, empstatus_id, schema_id) 
+ // values ('Alex', 'Morelatus', 1, 1, 1);
 
- * public void addEmployee(Employee e){
-      //int id=e.id();
-      //int id_employee = e.id_employee();
-      String f_name = e.f_name();
-      String s_name = e.s_name();
-      int kk_id = e.kk_id();
-      int empstatus_id = e.empstatus_id();
-      int schema_id = e.schema_id();
+    public void addEmployee(Employee emp){
+     // int id = e.id();
+     // int id_employee = e.id_employee();
+      String f_name = emp.f_name();
+      String s_name = emp.s_name();
+      int kk_id = emp.kk_id();
+      int empstatus_id = emp.empstatus_id();
+      int schema_id = emp.schema_id();
       
       String SQL = "INSERT INTO employee " +
-        "(f_name, s_name, kk_id, empstatus_id schema_id)" +
+        "(f_name, s_name, kk_id, empstatus_id, schema_id)" +
         " VALUES('" + f_name + "', " +
         "'" + s_name + "', " +
         "'" + kk_id + "', " +
         "'" + empstatus_id + "', " +
         "'" + schema_id + "')";
 
+     // db.executeUpdate(SQL);
 //        System.out.println("sql-et: " + SQL);
       System.out.println(db.executeUpdate(SQL)+
                          " rows inserted");
 
   // osäker på vad denna gör uppdaterat från title till review/id_review/AK
-      ResultSet rs = db.executeQuery("SELECT id_review"+
-                                     " FROM review"+
-                                     " WHERE review ='" + review + "'");
+      ResultSet rs = db.executeQuery("SELECT emp_id"+
+                                     " FROM employee"+
+                                     " WHERE f_name ='" + f_name + "'");
       try{
         rs.next();
-        r.setID(rs.getInt("id_employee"));
+       // r.setID(rs.getInt("emp_id"));
       } catch (Exception e){
         System.err.println("Getting ID: " + e.getMessage());
       } finally {
@@ -152,7 +154,7 @@ public class EmployeeSql {
       }
     }
 
-    public List<Review> getByMovieID(int id_movie){
+  /*  public List<Review> getByMovieID(int id_movie){
       ArrayList<Review> reviewList = new ArrayList<Review>();
       //System.out.println("Get by id_movie: " + id_movie);
       String SQL = "SELECT * FROM review WHERE id_movie ='" + id_movie + "'";

@@ -3,8 +3,11 @@ package se.iths.gui;
 
   import se.iths.app.TruckSql;
   import se.iths.app.Truck;
+  
   import se.iths.app.EmployeeSql;
   import se.iths.app.Employee;
+  import se.iths.gui.AddEmployee;
+  
   import se.iths.app.KKtyp;
   import se.iths.app.KKtypSql;
   import se.iths.app.VolymSql;
@@ -28,6 +31,7 @@ package se.iths.gui;
     private ArrayList<Employee> empListNames = new ArrayList<Employee>();
     private ArrayList<Truck> truckList = new ArrayList<Truck>();
     private ArrayList<Employee> employeeList = new ArrayList<Employee>();
+    private ArrayList<String> addEmployeeList = new ArrayList<String>();
         
     //-----------------------------//
     public void runMenu() {
@@ -69,7 +73,7 @@ package se.iths.gui;
         case 3: // Handle personel
           System.out.println("Manage employees");
         //  employeeList = empdb.getFullEmployeeList();
-          empdb.getEmployeeListNames();
+   //       empdb.getEmployeeListNames();
           
       /*    for (Employee emp: employeeList) {
             String s = emp.emp_id() + " " + emp.f_name() + " " + emp.s_name() + "  " + emp.kk_id()  + "  " + 
@@ -87,8 +91,14 @@ package se.iths.gui;
             }
             
             */
-          break;
+          AddEmployee addEmployee = new AddEmployee();       
+          addEmployeeList = addEmployee.addEmp();
+          Employee emp = new Employee(addEmployeeList);
+          System.out.println("\n" + emp);
+          empdb.addEmployee(emp);
+          //mdb.addMovie(m);
 
+          ///
           
         case 4: // Handle machinery
           System.out.println("Manage inventory");
