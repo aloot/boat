@@ -80,13 +80,44 @@ package se.iths.gui;
         case 3: // Handle personel
           System.out.println("\nManage employees");
         //  employeeList = empdb.getFullEmployeeList();
+<<<<<<< HEAD
    //       empdb.getEmployeeListNames();
+          
+      /*    for (Employee emp: employeeList) {
+            String s = emp.emp_id() + " " + emp.f_name() + " " + emp.s_name() + "  " + emp.kk_id()  + "  " + 
+                      emp.empstatus_id() + "  " + emp.schema_id();
+            if (emp.emp_id() < 10) {
+              System.out.println("  " + s);
+            } else if (emp.emp_id() < 100) {
+              System.out.println(" " + s);
+            } else {
+              System.out.println(s);
+            }
+ //           System.out.print(emp.emp_id() < 10 ? " " + emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id() : 
+ //               " " +  emp.emp_id() + " " + emp.f_name() + "  " + " " + emp.s_name() + "  " + " " + emp.kk_id()  + "  " + " " + emp.empstatus_id() + "  " + emp.schema_id());
+ //             System.out.println("");
+            }
+            
+            */
+          AddEmployee addEmployee = new AddEmployee();       
+          addEmployeeList = addEmployee.addEmp();
+          Employee emp = new Employee(addEmployeeList);
+          System.out.println("\n" + emp);
+          empdb.addEmployee(emp);
+          //mdb.addMovie(m);
+
+          ///
+          
+        case 4: // Handle machinery
+=======
+//          empdb.getEmployeeListNames();
           printEmpMenu();
           manageEmployees();
           printMenu();
           break;
 
         case 4: // Manage machinery
+>>>>>>> e212a8721f690712f86e5aed95736a97b4112cc7
           System.out.println("Manage inventory");
           tdb.selectTruckByKK(menuInput(trMsg, 8));
           printMenu();
@@ -95,10 +126,7 @@ package se.iths.gui;
         case 5: // quit
           System.out.println("Good Bye!");
           System.exit(0);
-          Employee emp = new Employee(addEmployeeList);
-          System.out.println("\n" + emp);
-          empdb.addEmployee(emp);
-          //mdb.addMovie(m);
+          break;
           
         case 6:
           System.out.println("Dev block");
@@ -139,11 +167,6 @@ package se.iths.gui;
 
       case 3:
         System.out.println("Add employee");
-        AddEmployee addEmployee = new AddEmployee();       
-        addEmployeeList = addEmployee.addEmp();
-        Employee emp = new Employee(addEmployeeList);
-        System.out.println("\n" + emp);
-        empdb.addEmployee(emp);
         /*        ArrayList<String> newEmp = rEmp.addEmp();
         for (String s : newEmp) {
  //         System.out.println(s);

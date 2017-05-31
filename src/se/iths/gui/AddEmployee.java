@@ -61,14 +61,14 @@ public class AddEmployee {
 
 			//Forklift
 			System.out.print("\nWhat type of forklift license does the employee have? ");
-			System.out.print("1. A005");
-			System.out.print("2. AA07");
-			System.out.print("3. B005");
-			System.out.print("4. BB07");
-			System.out.print("5. C005");
-			System.out.print("6. CC07");
-			System.out.print("7. CCC5");
-			System.out.print("8. K007");
+			System.out.print("\n1. A005");
+			System.out.print("\n2. AA07");
+			System.out.print("\n3. B005");
+			System.out.print("\n4. BB07");
+			System.out.print("\n5. C005");
+			System.out.print("\n6. CC07");
+			System.out.print("\n7. CCC5");
+			System.out.print("\n8. K007");
 			
 			System.out.print("\nForklift license : ");
 

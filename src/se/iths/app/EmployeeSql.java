@@ -224,7 +224,8 @@ public class EmployeeSql {
         db.closeIt(rs);
       }
     }
-
+}
   /*  public List<Review> getByMovieID(int id_movie){
 }
+*/
 
