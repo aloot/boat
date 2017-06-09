@@ -89,14 +89,16 @@ public class EmployeeSql {
     }
 
 // ---------------
-    public void searchOnNr(int wantedNr) {
-      ArrayList<String> employeeObj = new ArrayList<String>();
-      String SQL = "SELECT emp.emp_id, emp.f_name, emp.s_name, kk.kk_namn, es.empstatus_namn, sch.schema_namn "
+    //public void searchOnNr(int wantedNr) {
+    public ArrayList<String> searchOnNr(int wantedNr) {
+    	boolean tom = false;
+        ArrayList<String> employeeObj = new ArrayList<String>();
+        String SQL = "SELECT emp.emp_id, emp.f_name, emp.s_name, kk.kk_namn, es.empstatus_namn, sch.schema_namn "
           + "FROM employee emp, kktyp kk, empstatus es, empschema sch "
           + "WHERE emp.kk_id = kk.kk_id AND emp.empstatus_id = es.empstatus_id "
           + "AND emp.schema_id = sch.schema_id AND emp.emp_id = " + wantedNr + ";";
       ResultSet rs = db.executeQuery(SQL);
-      try {
+        try {
         while(rs.next()) {
           String emp_id = Integer.toString(rs.getInt("emp_id"));
           employeeObj.add(emp_id);
@@ -110,19 +112,28 @@ public class EmployeeSql {
           employeeObj.add(empstatus_namn);
           String schema_namn = rs.getString("schema_namn");
           employeeObj.add(schema_namn);
+          
       } 
+        if (!rs.next() ) {
+            System.out.println("no data");
+            tom = true;
+        } 
+       
         db.closeIt(rs);
       }  catch (Exception e){
         System.err.println("Retrieving 'searchOnNr': " + e.getMessage());
         db.closeIt(rs);
       }
-      System.out.println(employeeObj);
-    
+     // System.out.println(empList);
+    //  if (tom = false){
+     // System.out.println("test" + employeeObj.get(1));
+     // }
+        //Returnera signal om att data saknas
+      return employeeObj;
+       
   }
     
- // ---------------
-
-
+//--------------
     public void getEmployeeListNames(String empMsg){
     	ArrayList<Object> empListAll = new ArrayList<Object>();
     
@@ -158,8 +169,8 @@ public class EmployeeSql {
       }
 
     
- 
-    /*public ArrayList<Employee> getFullEmployeeList(){
+ /*
+    public ArrayList<Employee> getFullEmployeeList(){
       ArrayList<Employee> employeeList = new ArrayList<Employee>();
       String SQL = "SELECT * from employee";  
       ResultSet rs = db.executeQuery(SQL);
@@ -183,8 +194,8 @@ public class EmployeeSql {
         db.closeIt(rs);
       }
       return null;
-    }
-    */
+    }*/
+    
  // Insert Employee
  // insert into employee(f_name, s_name, kk_id, empstatus_id, schema_id) 
  // values ('Alex', 'Morelatus', 1, 1, 1);
@@ -224,8 +235,14 @@ public class EmployeeSql {
         db.closeIt(rs);
       }
     }
+    public void updateEmployee(String editObj, String editContent, int editId){
+    	System.out.println("inne i update: " + editObj + " " + editContent  + " " + editId);
+        String SQL="UPDATE employee SET " + editObj + "=" +  '"' + editContent  + '"'
+          + " WHERE emp_id =" + editId;
+        System.out.println(SQL);
+        System.out.println(db.executeUpdate(SQL)
+                           + " rows updated");
+      }
 }
-  /*  public List<Review> getByMovieID(int id_movie){
-}
-*/
+ 
 

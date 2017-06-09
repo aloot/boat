@@ -23,6 +23,7 @@ package se.iths.gui;
     private String empMsg = "- Employee menu, enter your choice: ";
     private String empMsgAskAgain = "- Employee menu, enter your choice: ";
     private String vMsg = "- Vessel call menu, enter your choice: ";
+    private String editMsg = "- Edit menu, enter your choice: ";
     
     private String invalidInput = "\n- - - Invalid input, please try again";
 
@@ -37,6 +38,7 @@ package se.iths.gui;
     private ArrayList<Truck> truckList = new ArrayList<Truck>();
     private ArrayList<Employee> employeeList = new ArrayList<Employee>();
     private ArrayList<String> addEmployeeList = new ArrayList<String>();
+    private ArrayList<String> employeeObj = new ArrayList<String>();
         
     //-----------------------------//
     public void runMenu() {
@@ -134,7 +136,10 @@ package se.iths.gui;
       case 2:
         System.out.println("Search for employee by id");
         int wantedNr = Integer.parseInt(sc.nextLine());
-        empdb.searchOnNr(wantedNr);
+        employeeObj = empdb.searchOnNr(wantedNr);    
+        System.out.println("Search by id: " + employeeObj.get(1));
+        System.out.println(employeeObj);
+        firstSearch();
         break;
 
       case 3:
@@ -151,8 +156,8 @@ package se.iths.gui;
         break;
 
       case 4:
-        System.out.println("getEmployeeListNames, 4");
-        empdb.getEmployeeListNames(empMsg);
+          System.out.println("getEmployeeListNames, 4");
+          empdb.getEmployeeListNames(empMsg);
         break;
 
       case 5:
@@ -167,7 +172,7 @@ package se.iths.gui;
     public void firstSearch() {
       System.out.println("\n1. Another search");
       System.out.println("2. Edit employee by id number");
-      System.out.println("2. Back to main menu");
+      System.out.println("3. Back to main menu");
       anotherSearch(menuInput(empMsgAskAgain, 3)); 
     }
     public void anotherSearch(int choice){
@@ -181,8 +186,15 @@ package se.iths.gui;
         break;
         
       case 2:
+    	  // här är jag    
+      	System.out.println("Enter employee id to edit: "); 
         int empId = Integer.parseInt(sc.nextLine());
-        empdb.searchOnNr(empId);
+        employeeObj = empdb.searchOnNr(empId);
+        System.out.println("nu är jag här");
+        System.out.println(employeeObj);
+        // ToDo Kontrollera att posten finns annars tillbaka till sök
+        fieldForEditing();
+        editEmployee(empId);
         break;
         
       case 3:
@@ -215,6 +227,139 @@ package se.iths.gui;
           kkdb.selectEmpsByKK(i);
     }
 
+    public void fieldForEditing() {
+        System.out.println("Select field for editing:");
+        System.out.println("1. First name: " + employeeObj.get(1));
+        System.out.println("2. Surname name: " + employeeObj.get(2));
+        System.out.println("3. Forklift license: " + employeeObj.get(3));
+        System.out.println("4. Employee status: " + employeeObj.get(4));
+        System.out.println("5. Schema: " + employeeObj.get(5));
+        System.out.println(employeeObj);
+        }
+    
+    
+    public void editEmployee(int empId) {
+      int menuChoice = menuInput(editMsg, 5);
+      switch (menuChoice) {
+      case 1:
+    	  System.out.println("Enter new first name: ");
+          String editContent = sc.nextLine();
+          String editObj = "f_name";
+          empdb.updateEmployee(editObj, editContent, empId);
+          System.out.println(editObj + " " + editContent  + " " + empId);
+          break;
+      case 2:
+    	  System.out.println("Enter new surname: ");
+          editContent = sc.nextLine();
+          editObj = "s_name";
+          empdb.updateEmployee(editObj, editContent, empId);
+          System.out.println(editObj + " " + editContent  + " " + empId);
+          break;
+      case 3:
+    	  System.out.print("\n1. A005");
+    	  System.out.print("\n2. AA07");
+    	  System.out.print("\n3. B005");
+    	  System.out.print("\n4. BB07");
+    	  System.out.print("\n5. C005");
+    	  System.out.print("\n6. CC07");
+    	  System.out.print("\n7. CCC5");
+    	  System.out.print("\n8. K007");
+    	  System.out.println("Enter new forklift license:");
+          String license = sc.nextLine();
+  //kontrollera invärden
+          while (license.trim().isEmpty()) {
+				System.out.print("\n'License' cannot be empty, please enter a license : ");
+				license =   sc.nextLine();
+			}
+			while (!license.matches("[0-9]+")){
+				 System.out.print("\nThis is not a number! Please enter a number from 1-8: ");
+				 license =   sc.nextLine();
+			}
+			int licenseInt = Integer.parseInt(license);
+			while (licenseInt < 1 || licenseInt > 9) {
+				System.out.print("\nInvalid number! Please enter a number from 1-8: ");
+				license =       sc.nextLine();
+				licenseInt = Integer.parseInt(license);
+			}
+			//uppdatera mot db
+			editObj = "kk_id";
+			editContent = Integer.toString(licenseInt);
+			empdb.updateEmployee(editObj, editContent, empId);
+			System.out.println(editObj + " " + editContent  + " " + empId);
+			break;
+      case 4:
+
+    	  System.out.println("Enter number for new employee status:");
+			System.out.print("\n1. 100%");
+			System.out.print("\n2. 50%");
+			System.out.print("\n3. Sick leave");
+			System.out.print("\n4. Care of children");
+			System.out.print("\n5. Studies");
+			System.out.print("\n6. Vacation");
+			System.out.print("\n7. Terminated employment");
+
+			String empstatus =       sc.nextLine();
+			while (empstatus.trim().isEmpty()) {
+				System.out.print("\n'Status' cannot be empty, please enter a statusnumber : ");
+				empstatus =   sc.nextLine();
+			}
+			while (!empstatus.matches("[0-9]+")){
+				 System.out.print("\nThis is not a number! Please enter a number from 1-8: ");
+				 empstatus =   sc.nextLine();
+			}
+			int empstatusInt = Integer.parseInt(empstatus);
+			while (empstatusInt < 1 || empstatusInt > 8) {
+				System.out.print("\nInvalid number! Please enter a number from 1-8: ");
+				empstatus =       sc.nextLine();
+				empstatusInt = Integer.parseInt(empstatus);
+			}
+			
+			editContent = Integer.toString(empstatusInt);
+			
+			editObj = "empstatus_id";
+
+          empdb.updateEmployee(editObj, editContent, empId);
+          System.out.println(editObj + " " + editContent  + " " + empId);
+          break;
+       case 5:
+    	  	System.out.print("\n1. Daytime weekdays");
+			System.out.print("\n2. Daytime weekend");
+			System.out.print("\n3. Daytime Sunday");
+			System.out.print("\n4. Evenings weekdays");
+			System.out.print("\n5. Evenings weekend");
+			System.out.print("\n6. Evenings Sunday");
+			System.out.print("\n7. Nights weekdays");
+			System.out.print("\n8. Nights weekend");
+			System.out.print("\n9. Nights enbart Sunday");
+			System.out.println("Enter new employee schema:");											
+			String schema =       sc.nextLine();
+			while (schema.trim().isEmpty()) {
+				System.out.print("\n'Schema' cannot be empty, please enter a schema number : ");
+				schema =   sc.nextLine();
+			}
+			while (!schema.matches("[0-9]+")){
+				 System.out.print("\nInvalid value! Please enter a number from 1-9: ");
+				 schema =   sc.nextLine();
+			}
+			int schemaInt = Integer.parseInt(schema);
+			while (schemaInt < 1 || schemaInt > 9) {
+				System.out.print("\nInvalid number! Please enter a number from 1-9: ");
+				schema = sc.nextLine();
+				schemaInt = Integer.parseInt(schema);
+			}
+			
+			editContent = Integer.toString(schemaInt);
+	
+			editObj = "schema_id";
+			empdb.updateEmployee(editObj, editContent, empId);
+			System.out.println(editObj + " " + editContent  + " " + empId);
+			break;
+        
+        default:
+          System.out.println(invalidInput);
+          break;          
+      }
+    }
 /*    private void extendMovieData(List<Movie> mList, int movieNr) {
   /*    AddReview addReview = new AddReview();
       ArrayList<String> newReview;
