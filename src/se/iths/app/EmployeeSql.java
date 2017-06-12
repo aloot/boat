@@ -4,10 +4,6 @@ import se.iths.app.Employee;
 
 import java.util.*;
 import java.sql.ResultSet;
- // klar - select med namn istället för id (join mot andra tabeller)
-// insert
-// update av namn, schema, körkort och empstatus - innan bör kontroll ske att id finns i tabeller
-// delete - bör inte kunna ske istället sker en update av emp_status till "Slutat"
 
 public class EmployeeSql {
 
@@ -49,7 +45,9 @@ public class EmployeeSql {
     }
 
 // ---------------
+    
     public void sortEmployeeList(ArrayList<Object> empListAll) {
+    	System.out.println("EmployeeId" + " " + "\tFirstname" + " " + "\tSurname" + " " + "\tTrucklicense" + " " + "\tStatus" + " " + "\tSchematype");
       ArrayList<Employee> empList = new ArrayList<Employee>();
       ArrayList<KKtyp> kkList = new ArrayList<KKtyp>();
       ArrayList<String> statList = new ArrayList<String>();
@@ -66,21 +64,21 @@ public class EmployeeSql {
         schemaList.add((String) empListAll.get(i + 3));
         counter ++;
       }
-//      System.out.println("empL: " + empList.size());
+
       for (int i = 0; i < empList.size(); i ++) {
         if (empList.get(i).emp_id() < 10) {
-          System.out.print("   " + empList.get(i).emp_id() + " ");        
+          System.out.print("   " + empList.get(i).emp_id() + " \t" + " \t");        
         } else if (empList.get(i).emp_id() < 100) {
-          System.out.print("  " + empList.get(i).emp_id() + " ");   
+          System.out.print("  " + empList.get(i).emp_id() + " \t" + " \t");   
         } else if (empList.get(i).emp_id() < 1000){
-          System.out.print(" " + empList.get(i).emp_id() + " ");
+          System.out.print(" " + empList.get(i).emp_id() + " \t" + " \t");
         } else {
-          System.out.print(" " + empList.get(i).emp_id() + " ");
+          System.out.print(" " + empList.get(i).emp_id() + " \t" + " \t");
         }
-        System.out.print(empList.get(i).f_name() + " ");
-        System.out.print(empList.get(i).s_name() + " ");
-        System.out.print(kkList.get(i).kk_namn() + " ");
-        System.out.print(statList.get(i) + " ");
+        System.out.print(empList.get(i).f_name() + " \t" + " \t");
+        System.out.print(empList.get(i).s_name() + " \t"+ "\t");
+        System.out.print(kkList.get(i).kk_namn() + " \t"+ " \t");
+        System.out.print(statList.get(i) + " \t");
         System.out.println(schemaList.get(i));
       }
     
@@ -88,16 +86,15 @@ public class EmployeeSql {
     
     }
 
-// ---------------
-    //public void searchOnNr(int wantedNr) {
-    public ArrayList<String> searchOnNr(int wantedNr) {
-    	boolean tom = false;
-        ArrayList<String> employeeObj = new ArrayList<String>();
+// Sök på emp_id //
+     public ArrayList<String> searchOnNr(int wantedNr) {
+    	ArrayList<String> employeeObj = new ArrayList<String>();
         String SQL = "SELECT emp.emp_id, emp.f_name, emp.s_name, kk.kk_namn, es.empstatus_namn, sch.schema_namn "
           + "FROM employee emp, kktyp kk, empstatus es, empschema sch "
           + "WHERE emp.kk_id = kk.kk_id AND emp.empstatus_id = es.empstatus_id "
           + "AND emp.schema_id = sch.schema_id AND emp.emp_id = " + wantedNr + ";";
-      ResultSet rs = db.executeQuery(SQL);
+        ResultSet rs = db.executeQuery(SQL);
+      
         try {
         while(rs.next()) {
           String emp_id = Integer.toString(rs.getInt("emp_id"));
@@ -112,25 +109,13 @@ public class EmployeeSql {
           employeeObj.add(empstatus_namn);
           String schema_namn = rs.getString("schema_namn");
           employeeObj.add(schema_namn);
-          
-      } 
-        if (!rs.next() ) {
-            System.out.println("no data");
-            tom = true;
-        } 
-       
+      }       
         db.closeIt(rs);
       }  catch (Exception e){
         System.err.println("Retrieving 'searchOnNr': " + e.getMessage());
         db.closeIt(rs);
       }
-     // System.out.println(empList);
-    //  if (tom = false){
-     // System.out.println("test" + employeeObj.get(1));
-     // }
-        //Returnera signal om att data saknas
-      return employeeObj;
-       
+        return employeeObj;   
   }
     
 //--------------
@@ -196,13 +181,8 @@ public class EmployeeSql {
       return null;
     }*/
     
- // Insert Employee
- // insert into employee(f_name, s_name, kk_id, empstatus_id, schema_id) 
- // values ('Alex', 'Morelatus', 1, 1, 1);
-
+// Insert ny employee //
     public void addEmployee(Employee emp){
-     // int id = e.id();
-     // int id_employee = e.id_employee();
       String f_name = emp.f_name();
       String s_name = emp.s_name();
       int kk_id = emp.kk_id();
@@ -217,8 +197,6 @@ public class EmployeeSql {
         "'" + empstatus_id + "', " +
         "'" + schema_id + "')";
 
-     // db.executeUpdate(SQL);
-//        System.out.println("sql-et: " + SQL);
       System.out.println(db.executeUpdate(SQL)+
                          " rows inserted");
 
@@ -235,6 +213,8 @@ public class EmployeeSql {
         db.closeIt(rs);
       }
     }
+    
+// Ändra employee	//   
     public void updateEmployee(String editObj, String editContent, int editId){
     	System.out.println("inne i update: " + editObj + " " + editContent  + " " + editId);
         String SQL="UPDATE employee SET " + editObj + "=" +  '"' + editContent  + '"'

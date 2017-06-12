@@ -81,16 +81,27 @@ package se.iths.gui;
          
         case 3: // Handle personel
           System.out.println("\nManage employees");
-        //  employeeList = empdb.getFullEmployeeList();
-   //       empdb.getEmployeeListNames();
           printEmpMenu();
           manageEmployees();
           printMenu();
           break;
 
         case 4: // Manage machinery
-          System.out.println("Manage inventory");
-          tdb.selectTruckByKK(menuInput(trMsg, 8));
+          System.out.println("Search all forklifts for a forklift license");
+      	  System.out.print("\n1. A005");
+      	  System.out.print("\n2. AA07");
+      	  System.out.print("\n3. B005");
+      	  System.out.print("\n4. BB07");
+      	  System.out.print("\n5. C005");
+      	  System.out.print("\n6. CC07");
+      	  System.out.print("\n7. CCC5");
+      	  System.out.print("\n8. K007");
+      	  System.out.println("\nEnter a forklift license:");
+          int searchLicense = Integer.parseInt(sc.nextLine());
+          
+          System.out.println("\nForklifts: ");
+          //tdb.selectTruckByKK(menuInput(trMsg, 8));
+          tdb.selectTruckByKK(searchLicense);
           printMenu();
           break;
           
@@ -123,7 +134,6 @@ package se.iths.gui;
     }
   //------------------------//
     public void manageEmployees() {
-//      RegEmployee rEmp = new RegEmployee();
       int choice = menuInput(empMsg, 5);
       switch (choice) {
       case 1:
@@ -137,32 +147,37 @@ package se.iths.gui;
         System.out.println("Search for employee by id");
         int wantedNr = Integer.parseInt(sc.nextLine());
         employeeObj = empdb.searchOnNr(wantedNr);    
-        System.out.println("Search by id: " + employeeObj.get(1));
-        System.out.println(employeeObj);
+        if(employeeObj != null && !employeeObj.isEmpty()){
+           	System.out.println("EmployeeId:  " + " \t" + employeeObj.get(0));
+        	System.out.println("Firstname:   " + " \t" + employeeObj.get(1));
+        	System.out.println("Surname:     " + " \t" + employeeObj.get(2));
+        	System.out.println("Trucklicense:" + " \t" + employeeObj.get(3));
+        	System.out.println("Status:      " + " \t" + employeeObj.get(4));
+        	System.out.println("Schematype:  " + " \t" + employeeObj.get(5));
+        	} else {
+        	System.out.println("There is no result for this id.");
+        }
         firstSearch();
         break;
 
       case 3:
-        System.out.println("Add employee");
-        AddEmployee addEmployee = new AddEmployee();       
-        addEmployeeList = addEmployee.addEmp();
-        Employee emp = new Employee(addEmployeeList);
-        System.out.println("\n" + emp);
-        empdb.addEmployee(emp);
-        /*        ArrayList<String> newEmp = rEmp.addEmp();
-        for (String s : newEmp) {
- //         System.out.println(s);
-        }*/
+    	System.out.println("Add employee");
+    	AddEmployee addEmployee = new AddEmployee();       
+    	addEmployeeList = addEmployee.addEmp();
+    	Employee emp = new Employee(addEmployeeList);
+    	System.out.println("\n" + emp);
+    	empdb.addEmployee(emp);        
         break;
 
       case 4:
-          System.out.println("getEmployeeListNames, 4");
-          empdb.getEmployeeListNames(empMsg);
+        System.out.println("getEmployeeListNames, 4");
+        empdb.getEmployeeListNames(empMsg);
         break;
 
       case 5:
-        System.out.println("emp menu, 5");
-        break;
+          System.out.println("Back to main menu!");
+          printMenu();
+          break;
         
         default:
           System.out.println(invalidInput);
@@ -170,10 +185,11 @@ package se.iths.gui;
       }
     }
     public void firstSearch() {
-      System.out.println("\n1. Another search");
-      System.out.println("2. Edit employee by id number");
-      System.out.println("3. Back to main menu");
-      anotherSearch(menuInput(empMsgAskAgain, 3)); 
+      System.out.println("\n1. Another search by name");
+      System.out.println("2. Another search by number");
+      System.out.println("3. Edit employee by id number");
+      System.out.println("4. Back to main menu");
+      anotherSearch(menuInput(empMsgAskAgain, 4)); 
     }
     public void anotherSearch(int choice){
       switch (choice) {
@@ -184,21 +200,39 @@ package se.iths.gui;
         empdb.searchOnName(wanted);
         firstSearch();
         break;
-        
       case 2:
-    	  // här är jag    
+          System.out.println("Another search: ");
+          System.out.println("- Search for employee by id - another");
+          int wantedId = Integer.parseInt(sc.nextLine());
+          employeeObj = empdb.searchOnNr(wantedId);
+          if(employeeObj != null && !employeeObj.isEmpty()){
+            System.out.println("EmployeeId:  " + " \t" + employeeObj.get(0));
+          	System.out.println("Firstname:   " + " \t" + employeeObj.get(1));
+          	System.out.println("Surname:     " + " \t" + employeeObj.get(2));
+          	System.out.println("Trucklicense:" + " \t" + employeeObj.get(3));
+          	System.out.println("Status:      " + " \t" + employeeObj.get(4));
+          	System.out.println("Schematype:  " + " \t" + employeeObj.get(5));
+          	} else {
+          	System.out.println("There is no result for this id.");
+          }
+          firstSearch();
+          break;
+      case 3:
       	System.out.println("Enter employee id to edit: "); 
         int empId = Integer.parseInt(sc.nextLine());
         employeeObj = empdb.searchOnNr(empId);
-        System.out.println("nu är jag här");
-        System.out.println(employeeObj);
-        // ToDo Kontrollera att posten finns annars tillbaka till sök
-        fieldForEditing();
-        editEmployee(empId);
+        if(employeeObj != null && !employeeObj.isEmpty()){
+        	fieldForEditing();
+        	editEmployee(empId);
+        } else {
+        	System.out.println("There is no result for this id.");
+        	firstSearch();
+        }
         break;
         
-      case 3:
+      case 4:
         System.out.println("Back to main menu!");
+        printMenu();
         break;
 
       default:
@@ -242,14 +276,14 @@ package se.iths.gui;
       int menuChoice = menuInput(editMsg, 5);
       switch (menuChoice) {
       case 1:
-    	  System.out.println("Enter new first name: ");
+    	  System.out.println("\nEnter new first name: ");
           String editContent = sc.nextLine();
           String editObj = "f_name";
           empdb.updateEmployee(editObj, editContent, empId);
           System.out.println(editObj + " " + editContent  + " " + empId);
           break;
       case 2:
-    	  System.out.println("Enter new surname: ");
+    	  System.out.println("\nEnter new surname: ");
           editContent = sc.nextLine();
           editObj = "s_name";
           empdb.updateEmployee(editObj, editContent, empId);
@@ -264,19 +298,19 @@ package se.iths.gui;
     	  System.out.print("\n6. CC07");
     	  System.out.print("\n7. CCC5");
     	  System.out.print("\n8. K007");
-    	  System.out.println("Enter new forklift license:");
+    	  System.out.println("\nEnter new forklift license:");
           String license = sc.nextLine();
   //kontrollera invärden
           while (license.trim().isEmpty()) {
 				System.out.print("\n'License' cannot be empty, please enter a license : ");
 				license =   sc.nextLine();
 			}
-			while (!license.matches("[0-9]+")){
-				 System.out.print("\nThis is not a number! Please enter a number from 1-8: ");
+			while (!license.matches("[0-8]+")){
+				 System.out.print("\nInvalid number! Please enter a number from 1-8: ");
 				 license =   sc.nextLine();
 			}
 			int licenseInt = Integer.parseInt(license);
-			while (licenseInt < 1 || licenseInt > 9) {
+			while (licenseInt < 1 || licenseInt > 8) {
 				System.out.print("\nInvalid number! Please enter a number from 1-8: ");
 				license =       sc.nextLine();
 				licenseInt = Integer.parseInt(license);
@@ -289,7 +323,7 @@ package se.iths.gui;
 			break;
       case 4:
 
-    	  System.out.println("Enter number for new employee status:");
+    	  System.out.println("\nEnter number for new employee status:");
 			System.out.print("\n1. 100%");
 			System.out.print("\n2. 50%");
 			System.out.print("\n3. Sick leave");
@@ -331,7 +365,7 @@ package se.iths.gui;
 			System.out.print("\n7. Nights weekdays");
 			System.out.print("\n8. Nights weekend");
 			System.out.print("\n9. Nights enbart Sunday");
-			System.out.println("Enter new employee schema:");											
+			System.out.println("\nEnter new employee schema:");											
 			String schema =       sc.nextLine();
 			while (schema.trim().isEmpty()) {
 				System.out.print("\n'Schema' cannot be empty, please enter a schema number : ");

@@ -6,11 +6,11 @@ import java.util.ArrayList;
 public class RegTrucks {
 
 	public ArrayList<String> addTruck = new ArrayList<String>(5);
-	//private String truckId     = "";
+	private String truckId     = "";
 	private String truckTyp      = "";
 	private String truckStatus   = "";
 
-	public ArrayList<String> addTruck() {
+/*	public ArrayList<String> addTruck() {
 
 		//addTruck.add(truckId);
 		addTruck.add(truckTyp);
@@ -57,7 +57,7 @@ public class RegTrucks {
 		return addTruck;
 
 	}
-
+*/
 
 	/*osÃ¤ker pÃ¥ vad denna gÃ¶r uppdaterat frÃ¥n title till review/id_review/AK
   ResultSet rs = db.executeQuery("SELECT volumeType"+
