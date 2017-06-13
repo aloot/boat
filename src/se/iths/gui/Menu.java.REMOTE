@@ -11,8 +11,6 @@ package se.iths.gui;
   import se.iths.app.KKtyp;
   import se.iths.app.KKtypSql;
   import se.iths.app.VolymSql;
-  import se.iths.app.ReportSql;
-  import se.iths.app.Report;
 
   import java.util.Scanner;
   import java.util.ArrayList;
@@ -24,8 +22,7 @@ package se.iths.gui;
     private String trMsg = "- Truck menu, enter your choice: ";
     private String empMsg = "- Employee menu, enter your choice: ";
     private String empMsgAskAgain = "- Employee menu, enter your choice: ";
-    private String vMsg = "- Vessel call menu, enter cargo type: ";
-    private String rMsg = "- Report menu, enter your choice";
+    private String vMsg = "- Vessel call menu, enter your choice: ";
     private String editMsg = "- Edit menu, enter your choice: ";
     
     private String invalidInput = "\n- - - Invalid input, please try again";
@@ -33,9 +30,7 @@ package se.iths.gui;
     private TruckSql tdb = new TruckSql();
     private EmployeeSql empdb = new EmployeeSql();  
     private KKtypSql kkdb = new KKtypSql();
-    private VolymSql volDb = new  VolymSql();
-    private ReportSql rdb = new ReportSql();
-    private Report rep = new Report();
+    private VolymSql vdb = new  VolymSql();
     
     private boolean exit;
     private Scanner sc = new Scanner(System.in);
@@ -47,7 +42,6 @@ package se.iths.gui;
         
     //-----------------------------//
     public void runMenu() {
-      System.out.println("BoatFace DataBase - Welcome");
       printMenu();
       while(!exit) {
         int menuChoice = menuInput(mmMsg, 6);
@@ -56,7 +50,7 @@ package se.iths.gui;
     }
   //-----------------------------//
     public void printMenu() {
-      System.out.println("\n- - -");
+      System.out.println("- - -");
       System.out.println("1. Vessel calls");
       System.out.println("2. Get a report");
       System.out.println("3. Manage personel");
@@ -73,15 +67,15 @@ package se.iths.gui;
     public void firstChoice(int menuChoice) {
       switch(menuChoice) {
         case 1: // Boka kaj
-          System.out.println("\nMake a vessel call");
-          printCallMenu();
+          System.out.println("Make a vessel call");
+          int i = menuInput(vMsg, 8);
+          vdb.vesselCallType(i);
+       //   pickBerth(i);
           printMenu();
         break;
         
         case 2: // Reports
-//          Report r = new Report();
           System.out.println("\nGet some nice reads");
-          printRepoMenu();
           printMenu();
           break;
          
@@ -93,8 +87,6 @@ package se.iths.gui;
           break;
 
         case 4: // Manage machinery
-          System.out.println("\nManage inventory");
-//          tdb.selectTruckByKK(menuInput(trMsg, 8));
           System.out.println("Search all forklifts for a forklift license");
       	  System.out.print("\n1. A005");
       	  System.out.print("\n2. AA07");
@@ -106,10 +98,10 @@ package se.iths.gui;
       	  System.out.print("\n8. K007");
       	  System.out.println("\nEnter a forklift license:");
           int searchLicense = Integer.parseInt(sc.nextLine());
-          System.out.println("\nForklifts: ");
           
+          System.out.println("\nForklifts: ");
           //tdb.selectTruckByKK(menuInput(trMsg, 8));
-//          tdb.selectTruckByKK(searchLicense);
+          tdb.selectTruckByKK(searchLicense);
           printMenu();
           break;
           
@@ -123,74 +115,16 @@ package se.iths.gui;
           
         case 6:
           System.out.println("Dev block");
-//          rep.doDate();
-          printMenu();     
+//          empdb.getEmpFromID(menuInput(600));
+//          empdb.getEmpFromID(400);          
           break;
          
         default:
           System.out.println(invalidInput);
-          printMenu();
           break;
       } 
     }
-//------------------------//
-    public void printRepoMenu() {
-      System.out.println("1. Back to main menu");
-      System.out.println("View reports, start date: (YYYY-MM-DD)");
-      String strDate1 = sc.nextLine();
-      if (strDate1.equals("1")) {
-        return;
-      } else {
-        System.out.println("until");
-        String strDate2 = sc.nextLine();
-        ArrayList<Report> repList = rdb.getReads(strDate1, strDate2);
-        System.out.println("1. Back to main menu");
-        System.out.println("2. Delete a call");
-        String s = sc.nextLine();
-        int i = Integer.parseInt(s);
-        if (i > 1) {
-          System.out.print("Delete ");
-          rdb.printOut(repList.get(i));
-          System.out.println("\nProceed? Y/N");
-          String proceed = sc.nextLine();
-          System.out.println("delete");
-        }
-      }
- 
-    }
-
-    public void printCallMenu() {
-      String cargoTypes = "1. A \n2. AA \n3. B \n4. BB \n5. C \n6. CC \n7. CCC \n8. K";
-      System.out.println("1. Back to main menu");
-      System.out.println("Enter a date (YYYY-MM-DD): ");
-// byt ut      
-//      String strDate = "2017-01-01";
-      String strDate = sc.nextLine();
-      if (strDate.equals("1")) {
-        return;
-      } else {
-        System.out.println(cargoTypes);        
-        getADate(strDate);      
-      }
-    }
-    private void getADate(String strDate) {
-      int volType = menuInput(vMsg, 8);
-      int sns = rdb.findFreeDate(strDate, volType);
-      int choice = menuInput("", sns + 2); // datum
-      if (choice <= sns) {
-        System.out.println("Enter the id number of the vessel (1-100)");
-        int ship = Integer.parseInt(sc.nextLine());
-        rdb.makeACall(choice, ship);
- //       volDb.vesselCallType(volType);
-      } else if (choice <= sns + 1 ) {
-        getANewDate();
-      }
-    }
-    public void getANewDate() {
-      printCallMenu();
-    }
-    
-//------------------------//
+  //------------------------//
     public void printEmpMenu() {
       System.out.println("1. Search for employee by name");
       System.out.println("2. Search for employee by id");
@@ -198,6 +132,7 @@ package se.iths.gui;
       System.out.println("4. getEmployeeListNames");
       System.out.println("5. emp 5");
     }
+  //------------------------//
     public void manageEmployees() {
       int choice = menuInput(empMsg, 5);
       switch (choice) {
@@ -244,13 +179,11 @@ package se.iths.gui;
           printMenu();
           break;
         
-      default:
-        System.out.println(invalidInput);
-        break;          
+        default:
+          System.out.println(invalidInput);
+          break;          
       }
     }
-
-//------------------------//
     public void firstSearch() {
       System.out.println("\n1. Another search by name");
       System.out.println("2. Another search by number");
@@ -258,7 +191,6 @@ package se.iths.gui;
       System.out.println("4. Back to main menu");
       anotherSearch(menuInput(empMsgAskAgain, 4)); 
     }
-//------------------------//
     public void anotherSearch(int choice){
       switch (choice) {
       case 1:
@@ -308,8 +240,7 @@ package se.iths.gui;
         break;
       }
     }
-
-//------------------------//  
+  
     public int menuInput(String menuMsg, int maxInt) {
       int menuChoice = -1;
       while (menuChoice < 0 || menuChoice > maxInt) {
@@ -326,11 +257,9 @@ package se.iths.gui;
       return menuChoice;
     }
 
-/*    private void pickBerth(int i) {
+    private void pickBerth(int i) {
           kkdb.selectEmpsByKK(i);
-          }*/
-//<<<<<<< HEAD
-    
+    }
 
     public void fieldForEditing() {
         System.out.println("Select field for editing:");
@@ -584,9 +513,52 @@ package se.iths.gui;
           }
         }
       } 
->>>>>>> f2f01dfa9083f803ddc08d966f1e39e3ec4f2349
     }*/
 
+/*    private void showActor(List<Actor> aList, int actNr) {
+      ArrayList<Object> oList;
+      ArrayList<Actor> actList = new ArrayList<Actor>();
+      ArrayList<MovieActor> maList = new ArrayList<MovieActor>();
+      ArrayList<Movie> mList = new ArrayList<Movie>();
+      for (Actor a : aList) {
+        if (actNr == a.id_actor()) {
+          oList = adb.getActorFromId(actNr);
+          if (oList.size() > 2) { // get it sorted
+            for (int i = 0; i < oList.size(); i = i + 3) {
+              actList.add((Actor) oList.get(i));
+              maList.add((MovieActor) oList.get(i + 1));
+              mList.add((Movie) oList.get(i + 2));
+            }
+          } // done sorting
+          int listSize = maList.size();
+          System.out.println(actList.get(0).name() + " is an actor, born " + actList.get(0).birth() + " in " + actList.get(0).nationality());
+          System.out.println("S/he has an acting part in: ");
+          for (int i = 0; i < maList.size(); i++) {
+            System.out.println("\t'" + mList.get(i).title() + "' by " +mList.get(i).director() + ", as " + maList.get(i).character() + (maList.size() - 1 > i ?  "," : ""));
+          }
+        }
+      } 
+    } */
+
+ /*   private void showActorList(List<Actor> aList) {
+      boolean b = true;
+      int actNr;
+      while (b) {
+        try {
+          System.out.println("\nEnter an actor number: ");
+          actNr = Integer.parseInt(sc.nextLine());
+          for (Actor a : aList) {
+            if (actNr == a.id_actor()){
+              showActor(aList, actNr);
+              b = false;
+            }
+          }
+        } catch (NumberFormatException e) {
+          System.out.println(invalidInput);
+        }
+      }
+    } */
+  //----------------------------------------------//
 
   //--------------------------------//
     public void helpMenu() {
