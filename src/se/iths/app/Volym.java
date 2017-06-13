@@ -5,10 +5,11 @@ public class Volym {
   private String voltyp_namn;
   private int voltyp_ant_emp;
   private int kk_id;
+  private String kk_namn;
   private int kaj_id;
   private int tr_typ_id;
   
-  public Volym(int voltyp_id, 
+  public Volym (int voltyp_id, 
       String voltyp_namn, 
       int voltyp_ant_emp, 
       int kk_id, 
@@ -35,6 +36,9 @@ public class Volym {
   public int kk_id() {
     return this.kk_id;
   }
+  public String kk_namn() {
+    return this.kk_namn;
+}
   public int kaj_id() {
     return this.kaj_id;
   }

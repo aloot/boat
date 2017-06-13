@@ -110,7 +110,7 @@ public class EmployeeSql {
           employeeObj.add(empstatus_namn);
           String schema_namn = rs.getString("schema_namn");
           employeeObj.add(schema_namn);
-      } 
+        } 
         db.closeIt(rs);
       }  catch (Exception e){
         System.err.println("Retrieving 'searchOnNr': " + e.getMessage());

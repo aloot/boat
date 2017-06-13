@@ -12,7 +12,7 @@ public class KKtypSql {
 
   DBUtils db = DBUtils.getInstance();
   
-  public void selectEmpsByKK(int kkType){
+  public void selectEmpsByKK(int kkType, int ant){
     ArrayList<Object> empListKK = new ArrayList<Object>();
     ArrayList<Employee> tmpEmpList = new ArrayList<Employee>();
     ArrayList<Employee> empList = new ArrayList<Employee>();
@@ -22,11 +22,6 @@ public class KKtypSql {
     ArrayList<String> statList = new ArrayList<String>();
     ArrayList<Integer> keepList = new ArrayList<Integer>();
     int counter = 0;
-//    String SQL = "SELECT * from t.*, tt.*, ts.* FROM truck t, trucktyp tt, trstatus ts 
-//    WHERE t.tr_typ_id = tt.tr_typ_id and t.tr_status_id = ts.tr_status_id LIMIT 20";
-//  select e.emp_id, e.f_name, kk.kk_namn from employee e, kktyp kk where e.kk_id = 1 and kk.kk_id = 1;
-//    "SELECT ma.character, a.*, m.* FROM movie_actor ma, actor a, movie m 
-    //WHERE ma.id_movie ='" + id_movie + "' and ma.id_actor = a.id_actor and ma.id_movie = m.id_movie";
     
     String SQL = "SELECT e.emp_id, e.f_name, e.s_name, kk.kk_namn, es.empstatus_namn "
         + "FROM employee e, kktyp kk,  empstatus es "
@@ -48,11 +43,11 @@ public class KKtypSql {
       }
       db.closeIt(rs);
     } catch (Exception e){
-      System.err.println("Retrieving 'selectEmpsByKK': " + e.getMessage());
+      System.err.println("- Retrieving 'selectEmpsByKK': " + e.getMessage());
       db.closeIt(rs);
     }
     
-    System.out.println("empListKK.size: " + empListKK.size());
+    //System.out.println("(empListKK.size: " + empListKK.size() + ")");
     for (int i = 0; i < empListKK.size(); i = i + 3) {
       tmpEmpList.add((Employee) empListKK.get(i));
       tmpKKList.add((KKtyp) empListKK.get(i + 1));
@@ -64,7 +59,7 @@ public class KKtypSql {
         keepList.add(i);
       }
     }
-    System.out.println("keepL: " + keepList.size());
+    //System.out.println("(keepL: " + keepList.size() + ")");
     
     
     if (keepList.size() < tmpEmpList.size()) {
@@ -80,14 +75,57 @@ public class KKtypSql {
       statList = new ArrayList<>(tmpStatList);
       counter = statList.size();
     }
-    System.out.println("empL: " + empList.size());
+//    System.out.println("(empL: " + empList.size() + ")");
     
-    
+    /**
+     * ant = ant + ant;
+     */
+    ant = ant + ant;
+    System.out.println("a: " + ant);
+    int chkSum = 0;
+    int placeInList = 0;
+    while (chkSum <= ant) {
+        if (statList.get(placeInList).equals("50%")) {
+          chkSum = chkSum + 1;
+        } else if (statList.get(placeInList).equals("100%")) {
+          chkSum = chkSum + 2;
+        }
+        placeInList ++;
+        System.out.print("cS: " + chkSum);
+        System.out.println(", pIL: " + placeInList);
+    }
+    if (empList.size() > placeInList) { // first cut
+      empList.subList(placeInList, empList.size()).clear();
+      statList.subList(placeInList, statList.size()).clear();
+      kkList.subList(placeInList, kkList.size()).clear();
+    }
+    if (chkSum > ant) {
+      System.out.println("cS diff: " + (chkSum - ant));
+      for (String s : statList) {
+        System.out.println(s);
+      }
+      int pos;
+      if (ant == (chkSum - 1)) {
+        System.out.println("tar bort 50");
+        pos = statList.indexOf("50%"); 
+
+      } else if (ant == (chkSum - 2)) {
+        System.out.println("tar bort 100");
+        pos = statList.indexOf("100%");
+      } else {
+        System.out.print("cS strul : " + chkSum );
+        pos = 100;
+      }
+      empList.remove(pos);
+      kkList.remove(pos);
+      statList.remove(pos);
+
+    }
     /**
      * Weed out inappropriate working hours, days, %
      */
-    
- 
+
+    System.out.println("Available employees: "); 
     
     for (int i = 0; i < empList.size(); i ++) {
       if (empList.get(i).emp_id() < 10) {
@@ -103,7 +141,7 @@ public class KKtypSql {
       System.out.println(statList.get(i));
     }
 
-    System.out.println("Employee count matching criteria: " + counter);
+    System.out.println("- Employee count matching criteria: " + counter);
     System.out.println("- - - ");
   }
 
