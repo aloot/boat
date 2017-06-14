@@ -60,8 +60,8 @@ public class ReportSql {
         db.closeIt(rs);
     }
     for (int i = 0; i < reportList.size(); i ++) {
-      //System.out.println("(reportList)");
       int id = reportList.get(i).report_id();
+
       if (id < 10 ) {
         System.out.print("  " + id);
       } else if (id < 100) {
@@ -69,8 +69,47 @@ public class ReportSql {
       } else {
         System.out.print(id);
       }
-      printOut(r);
-/*      System.out.print(". " + reportList.get(i).strDatum());
+      printOut(reportList.get(i));
+/*      String vTyp = r.voltyp_namn();
+      int vT;
+      switch(vTyp) {
+      case "A005":
+        vT = 1;
+        break;
+        
+      case "AA07":        
+        vT = 2;
+        break;
+
+      case "B005":
+        vT = 3;
+        break;
+      case "BB07":
+        vT = 4;
+        break;
+        
+      case "C005":
+        vT = 5;
+        break;
+        
+      case "CC07":
+        vT = 6;
+        break;
+      case "CCC5":
+        vT = 7;
+        break;      
+      case "K007":
+        vT = 8;
+        break;
+      
+      default:
+        vT = 0;
+        System.out.println("Unknown error");
+        break;
+      }*/
+//      volDb.vesselCallType(vT);
+
+      /*      System.out.print(". " + reportList.get(i).strDatum());
       System.out.print(", " + hours.get(reportList.get(i).pass()-1));
       System.out.print(", " + reportList.get(i).kaj_namn());
       System.out.print(", " + reportList.get(i).voltyp_namn());
@@ -78,8 +117,11 @@ public class ReportSql {
       System.out.print(", " + reportList.get(i).company());
       System.out.println(", " + reportList.get(i).total_price());*/
     }
+
     return reportList;
   }
+  
+  
   public void printOut(Report r) {
     System.out.print(". " + r.strDatum());
     System.out.print(", " + hours.get(r.pass()-1));

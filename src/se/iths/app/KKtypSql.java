@@ -81,7 +81,7 @@ public class KKtypSql {
      * ant = ant + ant;
      */
     ant = ant + ant;
-    System.out.println("a: " + ant);
+//    System.out.println("a: " + ant);
     int chkSum = 0;
     int placeInList = 0;
     while (chkSum <= ant) {
@@ -91,8 +91,8 @@ public class KKtypSql {
           chkSum = chkSum + 2;
         }
         placeInList ++;
-        System.out.print("cS: " + chkSum);
-        System.out.println(", pIL: " + placeInList);
+//        System.out.print("cS: " + chkSum);
+//        System.out.println(", pIL: " + placeInList);
     }
     if (empList.size() > placeInList) { // first cut
       empList.subList(placeInList, empList.size()).clear();
@@ -100,17 +100,17 @@ public class KKtypSql {
       kkList.subList(placeInList, kkList.size()).clear();
     }
     if (chkSum > ant) {
-      System.out.println("cS diff: " + (chkSum - ant));
-      for (String s : statList) {
-        System.out.println(s);
-      }
+//      System.out.println("cS diff: " + (chkSum - ant));
+/*      for (String s : statList) {
+        System.out.println("s: " + s);
+      }*/
       int pos;
       if (ant == (chkSum - 1)) {
-        System.out.println("tar bort 50");
+ //       System.out.println("tar bort 50");
         pos = statList.indexOf("50%"); 
 
       } else if (ant == (chkSum - 2)) {
-        System.out.println("tar bort 100");
+//        System.out.println("tar bort 100");
         pos = statList.indexOf("100%");
       } else {
         System.out.print("cS strul : " + chkSum );
