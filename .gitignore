@@ -18,6 +18,7 @@ boaty
 driver/
 src/se/iths/driver/
 z_src
+Databaser
 
 *target*
 
@@ -47,3 +48,30 @@ local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+Att göra%2Fanteckningar.docx
+create_report.sql
+Databaser/create_employee.sql
+Databaser/create_report.sql
+Databaser/create_ships.sql
+Databaser/create_statiska_tabeller.sql
+Databaser/create_truck.sql
+Databaser/drop_statiska_tabeller.sql
+Databaser/gammalt/create statiska tabeller.docx
+Databaser/gammalt/employee.docx
+Databaser/gammalt/insert employee.docx
+Databaser/gammalt/insert_employee.sql
+Databaser/gammalt/insert_ships.sql
+Databaser/gammalt/insert_truck.sql
+Databaser/gammalt/inserts statiska tabeller.sql
+Databaser/gammalt/ships.docx
+Databaser/gammalt/Statiska tabeller.docx
+Databaser/gammalt/truck.docx
+Databaser/insert_employee.sql
+Databaser/insert_ships.sql
+Databaser/insert_statiska_tabeller.sql
+Databaser/insert_truck.sql
+Databaser-20170610T124714Z-001.zip
+Inmatningsbilder.docx.docx
+Sprintplanning.docx
+sqlite3
+Systemering.docx
