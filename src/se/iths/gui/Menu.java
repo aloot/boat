@@ -27,8 +27,8 @@ package se.iths.gui;
     private String vMsg = "- Vessel call menu, enter cargo type: ";
     private String rMsg = "- Report menu, enter your choice";
     private String editMsg = "- Edit menu, enter your choice: ";
-    
     private String invalidInput = "\n- - - Invalid input, please try again";
+//    public static final String PROMPT = "Boaty> ";
 
     private TruckSql tdb = new TruckSql();
     private EmployeeSql empdb = new EmployeeSql();  
@@ -50,7 +50,7 @@ package se.iths.gui;
       System.out.println("BoatFace DataBase - Welcome");
       printMenu();
       while(!exit) {
-        int menuChoice = menuInput(mmMsg, 6);
+        int menuChoice = menuInput(mmMsg, 5);
         firstChoice(menuChoice);
       }
     }
@@ -62,7 +62,7 @@ package se.iths.gui;
       System.out.println("3. Manage personel");
       System.out.println("4. Manage inventory");
       System.out.println("5. Quit");
-      System.out.println("6. TMP");
+//      System.out.println("6. TMP");
     }
     //-------------------------------------//
   /*
@@ -136,24 +136,34 @@ package se.iths.gui;
 //------------------------//
     public void printRepoMenu() {
       System.out.println("1. Back to main menu");
+      System.out.println("2. Get report count");
       System.out.println("View reports, start date: (YYYY-MM-DD)");
+
       String strDate1 = sc.nextLine();
       if (strDate1.equals("1")) {
         return;
+      } else if (strDate1.equals("2")) {
+        int count = rdb.getReportCount();
+        System.out.println("Number of calls in database: " + count);
       } else {
         System.out.println("until");
+
         String strDate2 = sc.nextLine();
         ArrayList<Report> repList = rdb.getReads(strDate1, strDate2);
-        System.out.println("1. Back to main menu");
+        System.out.println("\n1. Back to main menu");
         System.out.println("2. Delete a call");
+
         String s = sc.nextLine();
         int i = Integer.parseInt(s);
         if (i > 1) {
           System.out.print("Delete ");
           rdb.printOut(repList.get(i));
           System.out.println("\nProceed? Y/N");
+
           String proceed = sc.nextLine();
           System.out.println("delete");
+        } else {
+          return;
         }
       }
  
@@ -178,7 +188,7 @@ package se.iths.gui;
       int sns = rdb.findFreeDate(strDate, volType);
       int choice = menuInput("", sns + 2); // datum
       if (choice <= sns) {
-        System.out.println("Enter the id number of the vessel (1-100)");
+        System.out.println("Enter the id number of the vessel (1-300)");
         int ship = Integer.parseInt(sc.nextLine());
         rdb.makeACall(choice, ship);
  //       volDb.vesselCallType(volType);

@@ -15,7 +15,7 @@ public class ReportSql {
   private LocalDate prefDate;
   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
   private int workHours;
-  private int nrOfSuggestions = 9;
+  private int nrOfSuggestions = 7;
   private int volType;
   private ArrayList<String> hours = new ArrayList<>();
   
@@ -60,8 +60,8 @@ public class ReportSql {
         db.closeIt(rs);
     }
     for (int i = 0; i < reportList.size(); i ++) {
+      System.out.println("- - - \n");
       int id = reportList.get(i).report_id();
-
       if (id < 10 ) {
         System.out.print("  " + id);
       } else if (id < 100) {
@@ -70,7 +70,7 @@ public class ReportSql {
         System.out.print(id);
       }
       printOut(reportList.get(i));
-/*      String vTyp = r.voltyp_namn();
+      String vTyp = r.voltyp_namn();
       int vT;
       switch(vTyp) {
       case "A005":
@@ -106,8 +106,8 @@ public class ReportSql {
         vT = 0;
         System.out.println("Unknown error");
         break;
-      }*/
-//      volDb.vesselCallType(vT);
+      }
+      volDb.vesselCallType(vT);
 
       /*      System.out.print(". " + reportList.get(i).strDatum());
       System.out.print(", " + hours.get(reportList.get(i).pass()-1));
@@ -117,7 +117,7 @@ public class ReportSql {
       System.out.print(", " + reportList.get(i).company());
       System.out.println(", " + reportList.get(i).total_price());*/
     }
-
+    System.out.println("\n- Number of calls within scope: " + reportList.size());
     return reportList;
   }
   
@@ -130,6 +130,24 @@ public class ReportSql {
     System.out.print(", " + r.ship_namn());
     System.out.print(", " + r.company());
     System.out.println(", " +r.total_price());
+  }
+  
+  public int getReportCount() {
+    int count = -1;
+    String SQL = "SELECT COUNT (*) FROM report";
+    ResultSet rs = db.executeQuery(SQL);
+    
+    try {
+      while (rs.next()){
+       count = rs.getInt(1);
+      }
+      db.closeIt(rs);
+    } catch (Exception e) {
+      System.err.println("- Retrieving 'getReads': " + e.getMessage());
+        db.closeIt(rs);
+    }
+    
+    return count;
   }
   public int  findFreeDate (String stringDate, int vol) {
 
@@ -159,7 +177,7 @@ public class ReportSql {
     }
 
     int inc = 0;
-    while (suggestions.size() < nrOfSuggestions + 1) {
+    while (suggestions.size() < nrOfSuggestions) {
       occupied = crunchSql(prefDate.plusDays(inc), vol);
       if (occupied.size() < 3) {
         if (occupied.indexOf(1) < 0) {

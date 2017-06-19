@@ -89,7 +89,7 @@ public class TruckSql {
         statList.subList(ant, statList.size()).clear();
       }
 
-      System.out.println("Available machinery: "); 
+      System.out.println("- Available machinery: "); 
       
       for (int i = 0; i < statList.size(); i ++) {
         if (tList.get(i).truck_id() < 10) {
@@ -103,9 +103,7 @@ public class TruckSql {
         System.out.print(ttList.get(i).tr_typ_pris() + " ");
         System.out.println(statList.get(i));
       }
-      System.out.println("- Trucks matching search criteria: " + counter);
-
-      System.out.println("- - - ");
+      System.out.println("- Trucks matching search criteria: " + counter + "\n");
     }
 
  /*   public List<Truck> getAllReviewsFullData(){

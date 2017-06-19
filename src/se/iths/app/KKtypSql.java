@@ -125,7 +125,7 @@ public class KKtypSql {
      * Weed out inappropriate working hours, days, %
      */
 
-    System.out.println("Available employees: "); 
+    System.out.println("- Available employees: "); 
     
     for (int i = 0; i < empList.size(); i ++) {
       if (empList.get(i).emp_id() < 10) {
@@ -141,8 +141,7 @@ public class KKtypSql {
       System.out.println(statList.get(i));
     }
 
-    System.out.println("- Employee count matching criteria: " + counter);
-    System.out.println("- - - ");
+    System.out.println("- Employee count matching criteria: " + counter + "\n");
   }
 
   private void komigen() {
