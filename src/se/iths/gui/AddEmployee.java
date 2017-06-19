@@ -124,7 +124,7 @@ public class AddEmployee {
 			addEmpList.set(3, empstatus);
 
 			//schema_id;
-			System.out.print("\nWhat kind of schema does the employee currently have? ");
+			System.out.print("\nWhat kind of schedule does the employee currently have? ");
 			System.out.print("\n1. Daytime weekdays");
 			System.out.print("\n2. Daytime weekend");
 			System.out.print("\n3. Daytime Sunday");
