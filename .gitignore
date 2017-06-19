@@ -1,4 +1,10 @@
-#*.class
+*.class
+*.orig
+*.docx
+*.odt
+*.sql
+*.zip
+
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -17,7 +23,10 @@ boaty
 # Mappar som ska exkluderas
 driver/
 src/se/iths/driver/
-z_src
+z_src/
+bin/
+Databaser/
+eyeAuto
 
 *target*
 
