@@ -106,10 +106,11 @@ package se.iths.gui;
       	  System.out.print("\n8. K007");
       	  System.out.println("\nEnter a forklift license:");
           int searchLicense = Integer.parseInt(sc.nextLine());
+      	  //String searchLicense = sc.nextLine();
           System.out.println("\nForklifts: ");
           
           //tdb.selectTruckByKK(menuInput(trMsg, 8));
-//          tdb.selectTruckByKK(searchLicense);
+          tdb.selectTruckByKK(searchLicense, 1000);
           printMenu();
           break;
           
@@ -117,7 +118,7 @@ package se.iths.gui;
           System.out.println("Good Bye!");
           System.exit(0);
           Employee emp = new Employee(addEmployeeList);
-          System.out.println("\n" + emp);
+         // System.out.println("\n" + emp);
           empdb.addEmployee(emp);
           //mdb.addMovie(m);
           
@@ -218,7 +219,7 @@ package se.iths.gui;
         	System.out.println("Surname:     " + " \t" + employeeObj.get(2));
         	System.out.println("Trucklicense:" + " \t" + employeeObj.get(3));
         	System.out.println("Status:      " + " \t" + employeeObj.get(4));
-        	System.out.println("Schematype:  " + " \t" + employeeObj.get(5));
+        	System.out.println("Schedule type:  " + " \t" + employeeObj.get(5));
         	} else {
         	System.out.println("There is no result for this id.");
         }
@@ -230,7 +231,7 @@ package se.iths.gui;
     	AddEmployee addEmployee = new AddEmployee();       
     	addEmployeeList = addEmployee.addEmp();
     	Employee emp = new Employee(addEmployeeList);
-    	System.out.println("\n" + emp);
+    	//System.out.println("\n" + emp);
     	empdb.addEmployee(emp);        
         break;
 
@@ -279,7 +280,7 @@ package se.iths.gui;
           	System.out.println("Surname:     " + " \t" + employeeObj.get(2));
           	System.out.println("Trucklicense:" + " \t" + employeeObj.get(3));
           	System.out.println("Status:      " + " \t" + employeeObj.get(4));
-          	System.out.println("Schematype:  " + " \t" + employeeObj.get(5));
+          	System.out.println("Schedule type:  " + " \t" + employeeObj.get(5));
           	} else {
           	System.out.println("There is no result for this id.");
           }
@@ -338,7 +339,7 @@ package se.iths.gui;
         System.out.println("2. Surname name: " + employeeObj.get(2));
         System.out.println("3. Forklift license: " + employeeObj.get(3));
         System.out.println("4. Employee status: " + employeeObj.get(4));
-        System.out.println("5. Schema: " + employeeObj.get(5));
+        System.out.println("5. Schedule: " + employeeObj.get(5));
         System.out.println(employeeObj);
         }
     
@@ -435,11 +436,11 @@ package se.iths.gui;
 			System.out.print("\n6. Evenings Sunday");
 			System.out.print("\n7. Nights weekdays");
 			System.out.print("\n8. Nights weekend");
-			System.out.print("\n9. Nights enbart Sunday");
-			System.out.println("\nEnter new employee schema:");											
+			System.out.print("\n9. Nights Only Sundays");
+			System.out.println("\nEnter new employee schedule:");											
 			String schema =       sc.nextLine();
 			while (schema.trim().isEmpty()) {
-				System.out.print("\n'Schema' cannot be empty, please enter a schema number : ");
+				System.out.print("\n'Schedule' cannot be empty, please enter a schedule number : ");
 				schema =   sc.nextLine();
 			}
 			while (!schema.matches("[0-9]+")){

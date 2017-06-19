@@ -109,11 +109,8 @@ public class EmployeeSql {
           employeeObj.add(empstatus_namn);
           String schema_namn = rs.getString("schema_namn");
           employeeObj.add(schema_namn);
-//<<<<<<< HEAD
         } 
-//=======
-//      }       
-//>>>>>>> f2f01dfa9083f803ddc08d966f1e39e3ec4f2349
+
         db.closeIt(rs);
       }  catch (Exception e){
         System.err.println("Retrieving 'searchOnNr': " + e.getMessage());
@@ -202,7 +199,7 @@ public class EmployeeSql {
         "'" + schema_id + "')";
 
       System.out.println(db.executeUpdate(SQL)+
-                         " rows inserted");
+                         " new employee is created successfully");
 
   // osäker på vad denna gör uppdaterat från title till review/id_review/AK
       ResultSet rs = db.executeQuery("SELECT emp_id"+
@@ -220,10 +217,10 @@ public class EmployeeSql {
     
 // Ändra employee	//   
     public void updateEmployee(String editObj, String editContent, int editId){
-    	System.out.println("inne i update: " + editObj + " " + editContent  + " " + editId);
+    	//System.out.println("inne i update: " + editObj + " " + editContent  + " " + editId);
         String SQL="UPDATE employee SET " + editObj + "=" +  '"' + editContent  + '"'
           + " WHERE emp_id =" + editId;
-        System.out.println(SQL);
+       // System.out.println(SQL);
         System.out.println(db.executeUpdate(SQL)
                            + " rows updated");
       }

@@ -13,10 +13,10 @@ import org.junit.experimental.categories.Category;
 import se.iths.app.EmployeeSql;
 
 
-
 		// TODO Auto-generated method stub
 		public class EmpSearch {
 			private ArrayList<String> employeeObj = new ArrayList<String>();
+			private ArrayList<String> addEmployeeList = new ArrayList<String>();
 		    private EmployeeSql empdb = new EmployeeSql();  
 			EmployeeSql empSql;
 				
@@ -37,12 +37,28 @@ import se.iths.app.EmployeeSql;
 
 			@Test
 			@Category(EmployeeTest.class)
-			public void testAdd() {
+			public void testSearch() {
 				int searchNr = 74;
 				employeeObj = empdb.searchOnNr(searchNr);
 				assertEquals("Porter", employeeObj.get(1));
 				}
 
-	}
+			@Test
+			@Category(EmployeeTest.class)
+			public void testUpdateStatus() {
+				//75|Lydia|Zamora|7|4|4
+				//1|100%
+				//2|50%
+				//3|Sick
+				//4|Child care
+				//5|Studies
+				//6|Vacation
+				//7|Terminated
+				int searchNr = 75;
+				empdb.updateEmployee("empstatus_id",  "5" , searchNr);
+				employeeObj = empdb.searchOnNr(searchNr);
+				assertEquals("Studies", employeeObj.get(4));
+				}
+				
+}
 
-//}
